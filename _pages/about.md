@@ -29,24 +29,29 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 
 ### Peer Reviewd
 
-[Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm](https://ieeexplore.ieee.org/abstract/document/10215826)
+- [Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm](https://ieeexplore.ieee.org/abstract/document/10215826)
+<br>**Xiaoran Yang**, Yang Zhan, Yukiko Iwasaki, Miaohui Shi, Shijie Tang, Hiroyasu Iwata
+<br>*ICMA 2023*
 
-**Xiaoran Yang**, Yang Zhan, Yukiko Iwasaki, Miaohui Shi, Shijie Tang, Hiroyasu Iwata
+- [Botnet detection based on machine learning](https://ieeexplore.ieee.org/abstract/document/9845057)
+<br>**Xiaoran Yang**, Zhen Guo, Zetian Mai
+<br>*ICBCTIS 2022*
 
-ICMA 2023
+- [Image Retrieval Based on Blockchain](https://ieeexplore.ieee.org/abstract/document/9845119/)
+<br>Sihao Zhao, Jiahui Xie, Chu Lin, Xiaolan Nie, Jun Ye, **Xiaoran Yang**, Pengzhi Xu
+<br>*ICBCTIS 2022*
 
-[Botnet detection based on machine learning](https://ieeexplore.ieee.org/abstract/document/9845057)
+- [Research and application of knowledge graph technology for intelligent question answering](https://ieeexplore.ieee.org/abstract/document/9720306)
+<br>Chengrong Lin, Shaofan Chen,**Xiaoran Yang**, Caimao Li, Cong Qu, Qiuhong Chen
+<br>*PAAP 2021*
 
-**Xiaoran Yang**, Zhen Guo, Zetian Mai
+- [Research on Automatic Composition Based on Multiple Machine Learning Models](https://dl.acm.org/doi/abs/10.1145/3495018.3495366)
+<br>**Xiaoran Yang**
+<br>*AIAM 2021*
 
-ICBCTIS 2022
-
-[**Project**](https://scholar.google.com/citations?view_op=view_citation&hl=zh-CN&user=DhtAFkwAAAAJ&citation_for_view=DhtAFkwAAAAJ:ALROH1vI_8AC) <strong><span class='show_paper_citations' data='DhtAFkwAAAAJ:ALROH1vI_8AC'></span></strong>
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-</div>
-</div>
-
-- [Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet](https://github.com), A, B, C, **CVPR 2020**
+- [Short-Term Traffic Condition Prediction Based on Multi-source Data Fusion](https://link.springer.com/chapter/10.1007/978-981-16-7476-1_29)
+<br>Xiaoru Deng, Hui Zhou, **Xiaoran Yang**, Chunyang Ye
+<br>*DMBD 2021*
 
 # 🎖 Honors and Awards
 - *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
