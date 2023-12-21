@@ -68,7 +68,7 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 # 💬 Presentation
 \* presenting author, \+ mentored undergraduate
 ### Conference Presentation
-- *2023.08*,**X. Yang***, Y. Zhan, Y. Iwasaki, M. Shi, S. Tang and H. Iwata+. 2023. Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm. Oral presentation: ICMA2023, Haerbin, China
+- *2023.08*, **X. Yang***, Y. Zhan, Y. Iwasaki, M. Shi, S. Tang and H. Iwata+. 2023. Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm. Oral presentation: ICMA2023, Haerbin, China
 - *2022.07*, **X. Yang***, et al. 2018. Botnet Detection Based on Machine Learning. Oral presentation: ICBCTIS2022, Huaihua, China.
 - *2022.07*, S. Zhao+, **X.Yang*** et al. Image Retrieval Based on Blockchain. Oral presentation: ICBCTIS2022, Huaihua, China.
 - *2021.12*, C. Lin, S. Chen, **X. Yang***, C. Li, C. Qu and Q. Chen+. 2021. Research and Application of Knowledge Graph Technology for Intelligent Question Answering. Oral presentation: PAAP2021, Xi’an, China.
