@@ -54,16 +54,26 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 <br>*DMBD 2021*
 
 # 🎖 Honors and Awards
-- *2021.10* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.09* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+- *2023.12.01* Graduate School Fellowship, Waseda University.
+- *2023.09.01* A Travel Award, Waseda University.
+- *2022.05.03* Best Undergraduate Graduation Thesis, Hefei University of Technology.
+- *2022.01.02* Ungraduate School Fellowship, Hefei University of Technology.
+- *2021.06.02* Best Collaboration Award, DEFCON 25th CTF Hacking Competition World Final.
+- *2021.03.02* Provincial Third Prize, College Students' Innovation and Entrepreneurship Competition.
 
 # 📖 Educations
-- *2019.06 - 2022.04 (now)*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2015.09 - 2019.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
+- *2022.09 - 2023.12 (now)*, Human Computer Interaction & Robotics, Waseda University. 
+- *2018.08 - 2022.06*, Computer Science & AI Application, Hefei University of Techology. 
 
-# 💬 Invited Talks
-- *2021.06*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. 
-- *2021.03*, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet.  \| [\[video\]](https://github.com/)
+# 💬 Presentation
+\* presenting author, \+ mentored undergraduate
+### Conference Presentation
+- *2023.08*,**X. Yang***, Y. Zhan, Y. Iwasaki, M. Shi, S. Tang and H. Iwata+. 2023. Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm. Oral presentation: ICMA2023, Haerbin, China
+- *2022.07*, **X. Yang***, et al. 2018. Botnet Detection Based on Machine Learning. Oral presentation: ICBCTIS2022, Huaihua, China.
+- *2022.07*, S. Zhao+, **X.Yang*** et al. Image Retrieval Based on Blockchain. Oral presentation: ICBCTIS2022, Huaihua, China.
+- *2021.12*, C. Lin, S. Chen, **X. Yang***, C. Li, C. Qu and Q. Chen+. 2021. Research and Application of Knowledge Graph Technology for Intelligent Question Answering. Oral presentation: PAAP2021, Xi’an, China.
+- *2021.10* Deng, X., Zhou, H., **Yang, X.***, Ye, C+ (2021). Short-Term Traffic Condition Prediction Based on Multi-source Data Fusion. Oral presentation: DMBD2021, Guangzhou, China.
+- *2021.08*, **Xiaoran Yang***. 2022. esearch on Automatic Composition Based on Multiple Machine Learning Models. Oral presentation: AIAM2021, New York, United States.
 
 # 💻 Internships
 - *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
