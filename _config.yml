@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Xiaoran Yang"
-description              : "Xiaoran Yang'Homepage"
+description              : # "Xiaoran Yang'Homepage"
 repository               : "IMYXR/imyxr.github.io"
 google_scholar_stats_use_cdn : true
 
