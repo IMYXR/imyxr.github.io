@@ -76,4 +76,7 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 - *2021.08*, **Xiaoran Yang***. 2022. esearch on Automatic Composition Based on Multiple Machine Learning Models. Oral presentation: AIAM2021, New York, United States.
 
 # 💻 Internships
-- *2019.05 - 2020.02*, [Lorem](https://github.com/), China.
+- [Ghelia Technology](https://ghelia.com/), AI Engineering & HCI Researcher
+<br>*2023.09 - present*, Tokyo Japan.
+- [Huawei Technology](https://www.huawei.com/cn/), AI Engineering & HCI Researcher
+<br>*2021.06 - 2021.10*, Shanghai China.
