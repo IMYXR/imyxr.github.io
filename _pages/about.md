@@ -73,7 +73,7 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 - *2022.07*, S. Zhao+, **X.Yang*** et al. Image Retrieval Based on Blockchain. Oral presentation: ICBCTIS2022, Huaihua, China.
 - *2021.12*, C. Lin, S. Chen, **X. Yang***, C. Li, C. Qu and Q. Chen+. 2021. Research and Application of Knowledge Graph Technology for Intelligent Question Answering. Oral presentation: PAAP2021, Xi’an, China.
 - *2021.10* Deng, X., Zhou, H., **Yang, X.***, Ye, C+ (2021). Short-Term Traffic Condition Prediction Based on Multi-source Data Fusion. Oral presentation: DMBD2021, Guangzhou, China.
-- *2021.08*, **Xiaoran Yang***. 2022. esearch on Automatic Composition Based on Multiple Machine Learning Models. Oral presentation: AIAM2021, New York, United States.
+- *2021.08*, **Xiaoran Yang***. 2022. Research on Automatic Composition Based on Multiple Machine Learning Models. Oral presentation: AIAM2021, New York, United States.
 
 # 💻 Internships
 - [Ghelia Technology](https://ghelia.com/), AI Engineering & HCI Researcher
