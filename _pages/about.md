@@ -19,7 +19,7 @@ redirect_from:
 
 I’m a second-year M.Eng. student in the Graduated School of Creative Science and Engineering @[Waseda University](https://www.waseda.jp/top/), Tokyo, supervised by Prof. [Hiroyasu Iwata](http://jubi-party.jp/people/professor) (English Program). I also spend my time as a research assistant at @[HNU](https://en.hainanu.edu.cn/), supervised by Zhen Guo, and at @[HFUT](https://www.hfut.edu.cn/), supervised by Juan Xu. I also interned at Huawei and Ghelia, focusing on the intersection of artificial intelligence and human-computer interaction, particularly the development of VR/AR interaction systems.
 
-**Research Interests**: My current research interests primarily lie in human-centered computing, AR/VR, and the field of accessibility. I am very interested in integrating large language models to develop intelligent systems applied in K-12 artificial intelligence education and the field of accessibility. My past work has mainly focused on the application of artificial intelligence algorithms and the development of human-computer interaction systems.
+**Research Interests**: My current research interests primarily lie in human-centered computing, AR/VR, Sensor technology and the field of accessibility. I am very interested in integrating large language models to develop intelligent systems applied in K-12 artificial intelligence education and the field of accessibility. My past work has mainly focused on the application of artificial intelligence algorithms and the development of human-computer interaction systems.
 
 
 # 🔥 News
