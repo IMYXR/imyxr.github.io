@@ -29,6 +29,10 @@ I’m a second-year M.Eng. student in the Graduated School of Creative Science a
 
 ### Peer Reviewd
 
+- Analysis of Lifting Posture by Two Inertial Measurement Units and a Classification Model Based on a Convolutional Neural Network
+<br>Juncheng Liu, **Xiaoran Yang**, Jing-Chen Hong, Hiroyasu Iwata
+<br>*BioRob 2024*
+
 - [Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm](https://ieeexplore.ieee.org/abstract/document/10215826)
 <br>**Xiaoran Yang**, Yang Zhan, Yukiko Iwasaki, Miaohui Shi, Shijie Tang, Hiroyasu Iwata
 <br>*ICMA 2023*
