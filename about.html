@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes">
+    <title>About - My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="prefetch" href="index.html">
+    <link rel="prefetch" href="link.html">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Left Sidebar - Personal Information (loaded dynamically) -->
+        <aside class="sidebar glass-card">
+            <!-- Sidebar content loaded from sidebar.html -->
+        </aside>
+
+        <!-- Right Content Area - About Page -->
+        <main class="content">
+            <section class="about-section">
+                <h2 class="section-title">About Me</h2>
+
+                <!-- Status Section -->
+                <article class="about-card glass-card">
+                    <h3>📍 Current Status</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <span class="status-label">Position</span>
+                            <span class="status-value">PhD Student</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Location</span>
+                            <span class="status-value">Raleigh, NC</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Research Focus</span>
+                            <span class="status-value">LLM Agent in XR</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Availability</span>
+                            <span class="status-value">Open to Collaborate</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Bio Section - Placeholder for your content -->
+                <article class="about-card glass-card">
+                    <h3>✨ Beyond Research</h3>
+                    <div class="bio-content">
+                        <p>Besides academic research, I also enjoy fitness and making beats. I have a strong interest in hip-hop. I think the best Chinese rap album to date is Asen's <在雨后醒来>.</p>
+                    </div>
+                </article>
+
+                <!-- GitHub Activity Section -->
+                <article class="about-card glass-card">
+                    <h3>📊 GitHub Activity</h3>
+                    <div class="github-section">
+                        <div class="github-stats">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-commits">0</div>
+                                <div class="stat-label">Total Commits</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="current-streak">0</div>
+                                <div class="stat-label">Day Streak</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="repositories">0</div>
+                                <div class="stat-label">Repositories</div>
+                            </div>
+                        </div>
+                        <div class="contribution-graph">
+                            <h4 class="graph-title">Contribution Activity</h4>
+                            <div class="months-labels" id="months-labels"></div>
+                            <div class="graph-container" id="contribution-graph"></div>
+                            <div class="graph-legend">
+                                <span class="legend-label">Less</span>
+                                <div class="legend-item" data-level="0"></div>
+                                <div class="legend-item" data-level="1"></div>
+                                <div class="legend-item" data-level="2"></div>
+                                <div class="legend-item" data-level="3"></div>
+                                <div class="legend-item" data-level="4"></div>
+                                <span class="legend-label">More</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Skills Section with Icons -->
+                <article class="about-card glass-card">
+                    <h3>🛠️ Skills & Expertise</h3>
+                    <div class="skills-section">
+                        <div class="skill-category">
+                            <h4 class="skill-category-title">Programming Languages</h4>
+                            <div class="skill-icons-grid">
+                                <img src="https://skillicons.dev/icons?i=python" alt="Python" class="skill-icon" title="Python">
+                                <img src="https://skillicons.dev/icons?i=js" alt="JavaScript" class="skill-icon" title="JavaScript">
+                                <img src="https://skillicons.dev/icons?i=cpp" alt="C++" class="skill-icon" title="C++">
+                                <img src="https://skillicons.dev/icons?i=java" alt="Java" class="skill-icon" title="Java">
+                                <img src="https://skillicons.dev/icons?i=r" alt="R" class="skill-icon" title="R">
+                                <img src="https://skillicons.dev/icons?i=html" alt="HTML" class="skill-icon" title="HTML">
+                                <img src="https://skillicons.dev/icons?i=css" alt="CSS" class="skill-icon" title="CSS">
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category-title">AI & Machine Learning</h4>
+                            <div class="skill-icons-grid">
+                                <img src="https://skillicons.dev/icons?i=pytorch" alt="PyTorch" class="skill-icon" title="PyTorch">
+                                <img src="https://skillicons.dev/icons?i=tensorflow" alt="TensorFlow" class="skill-icon" title="TensorFlow">
+                                <img src="https://skillicons.dev/icons?i=opencv" alt="OpenCV" class="skill-icon" title="OpenCV">
+                                <img src="https://skillicons.dev/icons?i=sklearn" alt="scikit-learn" class="skill-icon" title="scikit-learn">
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category-title">Web & App Development</h4>
+                            <div class="skill-icons-grid">
+                                <img src="https://skillicons.dev/icons?i=react" alt="React" class="skill-icon" title="React">
+                                <img src="https://skillicons.dev/icons?i=nodejs" alt="Node.js" class="skill-icon" title="Node.js">
+                                <img src="https://skillicons.dev/icons?i=vue" alt="Vue.js" class="skill-icon" title="Vue.js">
+                                <img src="https://skillicons.dev/icons?i=unity" alt="Unity" class="skill-icon" title="Unity">
+                                <img src="https://skillicons.dev/icons?i=threejs" alt="Three.js" class="skill-icon" title="Three.js">
+                                <img src="https://skillicons.dev/icons?i=figma" alt="Figma" class="skill-icon" title="Figma">
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4 class="skill-category-title">Tools & Technologies</h4>
+                            <div class="skill-icons-grid">
+                                <img src="https://skillicons.dev/icons?i=git" alt="Git" class="skill-icon" title="Git">
+                                <img src="https://skillicons.dev/icons?i=github" alt="GitHub" class="skill-icon" title="GitHub">
+                                <img src="https://skillicons.dev/icons?i=docker" alt="Docker" class="skill-icon" title="Docker">
+                                <img src="https://skillicons.dev/icons?i=aws" alt="AWS" class="skill-icon" title="AWS">
+                                <img src="https://skillicons.dev/icons?i=vscode" alt="VS Code" class="skill-icon" title="VS Code">
+                                <img src="https://skillicons.dev/icons?i=linux" alt="Linux" class="skill-icon" title="Linux">
+                                <img src="https://skillicons.dev/icons?i=mongodb" alt="MongoDB" class="skill-icon" title="MongoDB">
+                                <img src="https://skillicons.dev/icons?i=postgres" alt="PostgreSQL" class="skill-icon" title="PostgreSQL">
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Interests Section -->
+                <article class="about-card glass-card">
+                    <h3>🎨 Interests & Hobbies</h3>
+                    <div class="interests-grid">
+                        <div class="interest-item">
+                            <span class="interest-icon">💻</span>
+                            <p>Open Source</p>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">📚</span>
+                            <p>Reading</p>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">🎮</span>
+                            <p>Gaming</p>
+                        </div>
+                        <div class="interest-item">
+                            <span class="interest-icon">🏋️</span>
+                            <p>Gym</p>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <!-- Three.js and Globe.gl for 3D Globe -->
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Config file (you'll need to create this) -->
+    <script src="config.js"></script>
+    <script src="sidebar-template.js"></script>
+    <script src="script.js"></script>
+    <script src="github-activity.js"></script>
+</body>
+</html>

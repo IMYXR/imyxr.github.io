@@ -1,0 +1,5 @@
+# Supabase configuration is now public (using Row Level Security)
+# config.js is safe to commit with anon key
+
+# Keep the example file for reference
+!config.example.js

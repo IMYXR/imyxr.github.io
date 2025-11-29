@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=3.0, user-scalable=yes">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="prefetch" href="about.html">
+    <link rel="prefetch" href="link.html">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Left Sidebar - Personal Information (loaded dynamically) -->
+        <aside class="sidebar glass-card">
+            <!-- Sidebar content loaded from sidebar.html -->
+        </aside>
+
+        <!-- Right Content Area -->
+        <main class="content">
+            <!-- Introduction Section -->
+            <section class="intro-section">
+                <article class="intro-card glass-card">
+                    <p class="intro-text">
+                        I'm a second-year PhD student in Department of Computer Science NC State, supervised by <a href="https://georgiejin.com/" target="_blank" rel="noopener noreferrer" class="professor-link">Prof. Qiao Jin</a>. Previously, I'm a second-year M.Eng. student in the Graduated School of Creative Science and Engineering at Waseda University, Tokyo, supervised by <a href="http://www.jubi-party.jp/people/professor" target="_blank" rel="noopener noreferrer" class="professor-link">Prof. Hiroyasu Iwata</a>. I also interned at Huawei and Ghelia, focusing on the intersection of artificial intelligence and human-computer interaction, particularly the development of VR/AR interaction systems.
+                    </p>
+                </article>
+            </section>
+
+            <!-- News Section - Vertical Timeline -->
+            <section class="news-section">
+                <h2 class="section-title">Latest News</h2>
+                <div class="news-timeline-container glass-card">
+                    <div class="timeline-scroll-wrapper">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">🎉</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">October 2025</div>
+                                    <h3 class="timeline-title">Paper Won Best Short Paper Honorable Mention</h3>
+                                    <p class="timeline-text">Exitced to annouce our paper  “From Tool to Partner: Exploring the Roles of Embodiment on AI Agent in Pair Programming” won Best Short Paper Honorable Mention at VL/HCC 2025!</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">🎉</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">July 2025</div>
+                                    <h3 class="timeline-title">VL/HCC 2025 Accepted</h3>
+                                    <p class="timeline-text">My work “From Tool to Partner: Exploring the Roles of Embodiment on AI Agent in Pair Programming” has been accepted to VL/HCC 2025. Check the paper below!</p>
+                                </div>
+                            </div>
+                            <!-- <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">💡</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">August 2025</div>
+                                    <h3 class="timeline-title">Open Source Contribution</h3>
+                                    <p class="timeline-text">Major contribution to popular open-source framework, improving performance by 40%.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">🏆</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">July 2025</div>
+                                    <h3 class="timeline-title">Award Recognition</h3>
+                                    <p class="timeline-text">Received Developer of the Month award for outstanding contributions to the tech community.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">📚</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">June 2025</div>
+                                    <h3 class="timeline-title">New Blog Series</h3>
+                                    <p class="timeline-text">Started a comprehensive blog series on modern web architecture and best practices.</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">
+                                    <span class="timeline-icon">✨</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">May 2025</div>
+                                    <h3 class="timeline-title">Website Redesign</h3>
+                                    <p class="timeline-text">Launched new portfolio website with liquid glass effects and modern design principles.</p>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Publications Section -->
+            <section class="publications-section">
+                <h2 class="section-title">Publications</h2>
+                <div class="publications-grid">
+                    <article class="project-card glass-card">
+                        <div class="liquid-glass-overlay"></div>
+                        <div class="liquid-glass-edge"></div>
+                        <div class="liquid-glass-rim"></div>
+                        <div class="project-image">
+                            <img src="figures/Project1.png" alt="Project 1">
+                        </div>
+                        <div class="project-content">
+                            <h2>From Tool to Partner: Exploring the Roles of Embodiment on AI Agent in Pair Programming🏅</h2>
+                            <p>Xiaoran Yang, Yang Zhan, Noboru Matsuda, Qiao Jin</p>
+                            <p>To address communication challenges in AI pair programming, paper  investigates the role of an embodied AI agent in supporting programming learning and improving the user experience.</p>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <img src="https://skillicons.dev/icons?i=unity" alt="Unity" class="skill-icon" title="Unity">
+                                    <img src="https://skillicons.dev/icons?i=python" alt="Python" class="skill-icon" title="Python">
+                                </div>
+                                <div class="project-links">
+                                    <a href="papers/VL_HCC_2025.html" target="_blank" class="project-link">📄 View Paper</a>
+                                    <!-- <a href="#" class="project-link">View Demo(Coming Soon...)</a>
+                                    <a href="#" class="project-link">GitHub(Coming Soon...)</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- <article class="project-card glass-card">
+                        <div class="liquid-glass-overlay"></div>
+                        <div class="liquid-glass-edge"></div>
+                        <div class="liquid-glass-rim"></div>
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250" alt="Project 2">
+                        </div>
+                        <div class="project-content">
+                            <h3>Task Management App</h3>
+                            <p>Collaborative task management tool with real-time updates and team collaboration features.</p>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span class="tag">Vue.js</span>
+                                    <span class="tag">Firebase</span>
+                                    <span class="tag">TypeScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">View Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card">
+                        <div class="liquid-glass-overlay"></div>
+                        <div class="liquid-glass-edge"></div>
+                        <div class="liquid-glass-rim"></div>
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250" alt="Project 3">
+                        </div>
+                        <div class="project-content">
+                            <h3>Weather Dashboard</h3>
+                            <p>Beautiful weather application with animated backgrounds and detailed forecasts.</p>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span class="tag">React</span>
+                                    <span class="tag">API</span>
+                                    <span class="tag">CSS3</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">View Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card">
+                        <div class="liquid-glass-overlay"></div>
+                        <div class="liquid-glass-edge"></div>
+                        <div class="liquid-glass-rim"></div>
+                        <div class="project-image">
+                            <img src="https://via.placeholder.com/400x250" alt="Project 4">
+                        </div>
+                        <div class="project-content">
+                            <h3>Portfolio Builder</h3>
+                            <p>No-code portfolio builder with drag-and-drop interface and customizable templates.</p>
+                            <div class="project-footer">
+                                <div class="project-tags">
+                                    <span class="tag">Next.js</span>
+                                    <span class="tag">Tailwind</span>
+                                    <span class="tag">Prisma</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">View Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article> -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Three.js and Globe.gl for 3D Globe -->
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Config file (you'll need to create this) -->
+    <script src="config.js"></script>
+    <script src="sidebar-template.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

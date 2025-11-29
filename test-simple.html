@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Globe Test - No Supabase</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        #globe-container {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            margin: 20px auto;
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin: 10px auto;
+            max-width: 400px;
+        }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
+    </style>
+</head>
+<body>
+    <div class="status">
+        <h2>Simple Globe Test</h2>
+        <p id="status">Loading...</p>
+    </div>
+
+    <div id="globe-container"></div>
+
+    <!-- Three.js and Globe.gl -->
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
+    <script>
+        const statusEl = document.getElementById('status');
+
+        function updateStatus(msg, isError = false) {
+            console.log(msg);
+            statusEl.textContent = msg;
+            statusEl.className = isError ? 'error' : 'success';
+        }
+
+        setTimeout(() => {
+            updateStatus('Checking libraries...');
+
+            if (typeof THREE === 'undefined') {
+                updateStatus('ERROR: Three.js not loaded!', true);
+                return;
+            }
+            console.log('✓ Three.js loaded');
+
+            if (typeof Globe === 'undefined') {
+                updateStatus('ERROR: Globe.gl not loaded!', true);
+                return;
+            }
+            console.log('✓ Globe.gl loaded');
+
+            const container = document.getElementById('globe-container');
+            if (!container) {
+                updateStatus('ERROR: Container not found!', true);
+                return;
+            }
+
+            updateStatus('Initializing globe...');
+
+            try {
+                const sampleData = [
+                    { lat: 35.7796, lng: -78.6382, size: 1, color: '#3b82f6', city: 'Raleigh', country: 'USA', visits: 5 },
+                    { lat: 40.7128, lng: -74.0060, size: 0.8, color: '#3b82f6', city: 'New York', country: 'USA', visits: 3 },
+                    { lat: 51.5074, lng: -0.1278, size: 0.6, color: '#60a5fa', city: 'London', country: 'UK', visits: 2 },
+                    { lat: 35.6762, lng: 139.6503, size: 1, color: '#3b82f6', city: 'Tokyo', country: 'Japan', visits: 4 },
+                ];
+
+                const globe = Globe()
+                    (container)
+                    .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                    .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+                    .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+                    .pointsData(sampleData)
+                    .pointAltitude('size')
+                    .pointColor('color')
+                    .pointRadius(0.6)
+                    .atmosphereColor('#3b82f6')
+                    .atmosphereAltitude(0.15)
+                    .width(container.offsetWidth)
+                    .height(400)
+                    .pointLabel(d => `
+                        <div style="background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; color: white;">
+                            <strong>${d.city}, ${d.country}</strong><br/>
+                            Visits: ${d.visits}
+                        </div>
+                    `);
+
+                globe.controls().autoRotate = true;
+                globe.controls().autoRotateSpeed = 0.5;
+                globe.controls().enableZoom = false;
+                globe.pointOfView({ lat: 38, lng: -83, altitude: 2.5 }, 0);
+
+                updateStatus('✓ Globe initialized successfully!');
+            } catch (error) {
+                updateStatus('ERROR: ' + error.message, true);
+                console.error('Full error:', error);
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

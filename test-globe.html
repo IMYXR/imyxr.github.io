@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globe Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        #globe-container {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            margin: 20px auto;
+            background: rgba(10, 25, 47, 0.8);
+            border-radius: 12px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            margin: 10px auto;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="status">
+        <h2>Globe Test Page</h2>
+        <p id="status">Loading...</p>
+    </div>
+
+    <div id="globe-container"></div>
+
+    <!-- Three.js and Globe.gl -->
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
+
+    <script>
+        const statusEl = document.getElementById('status');
+
+        function updateStatus(msg) {
+            console.log(msg);
+            statusEl.textContent = msg;
+        }
+
+        window.addEventListener('load', () => {
+            updateStatus('Page loaded, checking for Globe library...');
+
+            setTimeout(() => {
+                if (typeof Globe === 'undefined') {
+                    updateStatus('ERROR: Globe library not loaded!');
+                    return;
+                }
+
+                updateStatus('Globe library found, initializing...');
+
+                const container = document.getElementById('globe-container');
+
+                if (!container) {
+                    updateStatus('ERROR: Container not found!');
+                    return;
+                }
+
+                try {
+                    const sampleData = [
+                        { lat: 35.7796, lng: -78.6382, size: 1, color: '#3b82f6' },
+                        { lat: 40.7128, lng: -74.0060, size: 0.8, color: '#3b82f6' },
+                        { lat: 51.5074, lng: -0.1278, size: 0.6, color: '#60a5fa' },
+                        { lat: 35.6762, lng: 139.6503, size: 1, color: '#3b82f6' },
+                    ];
+
+                    const globe = Globe()
+                        (container)
+                        .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                        .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+                        .backgroundImageUrl('https://unpkg.com/three-globe/example/img/night-sky.png')
+                        .pointsData(sampleData)
+                        .pointAltitude('size')
+                        .pointColor('color')
+                        .pointRadius(0.6)
+                        .atmosphereColor('#3b82f6')
+                        .atmosphereAltitude(0.15)
+                        .width(container.offsetWidth)
+                        .height(400);
+
+                    globe.controls().autoRotate = true;
+                    globe.controls().autoRotateSpeed = 0.5;
+                    globe.controls().enableZoom = false;
+                    globe.pointOfView({ lat: 38, lng: -83, altitude: 2.5 }, 0);
+
+                    updateStatus('SUCCESS: Globe initialized!');
+                } catch (error) {
+                    updateStatus('ERROR: ' + error.message);
+                    console.error(error);
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
