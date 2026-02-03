@@ -89,27 +89,83 @@ async function trackVisitor() {
     }
 }
 
+// Default/fallback visitor data (shown when no cached data available)
+const DEFAULT_VISITOR_DATA = [
+    { lat: 35.7796, lng: -78.6382, city: 'Raleigh', country: 'USA', size: 1, color: '#3b82f6', visits: 5 },
+    { lat: 40.7128, lng: -74.0060, city: 'New York', country: 'USA', size: 0.8, color: '#3b82f6', visits: 3 },
+    { lat: 51.5074, lng: -0.1278, city: 'London', country: 'UK', size: 0.6, color: '#60a5fa', visits: 2 },
+    { lat: 35.6762, lng: 139.6503, city: 'Tokyo', country: 'Japan', size: 1, color: '#3b82f6', visits: 4 },
+    { lat: 31.2304, lng: 121.4737, city: 'Shanghai', country: 'China', size: 0.7, color: '#60a5fa', visits: 3 },
+];
+
+// Track database connection status
+let databaseConnected = false;
+let retryInterval = null;
+
+// Cache key for localStorage
+const VISITOR_CACHE_KEY = 'visitorMapCache';
+
+// Get cached visitor data from localStorage
+function getCachedVisitorData() {
+    try {
+        const cached = localStorage.getItem(VISITOR_CACHE_KEY);
+        if (cached) {
+            const data = JSON.parse(cached);
+            console.log('Using cached visitor data from last successful load');
+            return data;
+        }
+    } catch (e) {
+        console.warn('Error reading cache:', e);
+    }
+    return null;
+}
+
+// Save visitor data to localStorage cache
+function cacheVisitorData(data) {
+    try {
+        localStorage.setItem(VISITOR_CACHE_KEY, JSON.stringify(data));
+        console.log('Visitor data cached successfully');
+    } catch (e) {
+        console.warn('Error caching visitor data:', e);
+    }
+}
+
+// Get fallback data (cached first, then default)
+function getFallbackData() {
+    const cached = getCachedVisitorData();
+    return cached || DEFAULT_VISITOR_DATA;
+}
+
 // Load visitor data from Supabase
 async function loadVisitorData() {
     if (!supabase) {
-        console.warn('Supabase not initialized, using sample data');
-        // Return sample data as fallback
-        return [
-            { lat: 35.7796, lng: -78.6382, size: 1, color: '#3b82f6', visits: 5 },
-            { lat: 40.7128, lng: -74.0060, size: 0.8, color: '#3b82f6', visits: 3 },
-            { lat: 51.5074, lng: -0.1278, size: 0.6, color: '#60a5fa', visits: 2 },
-            { lat: 35.6762, lng: 139.6503, size: 1, color: '#3b82f6', visits: 4 },
-        ];
+        console.warn('Supabase not initialized, using fallback data');
+        databaseConnected = false;
+        return getFallbackData();
     }
 
     try {
         const { data, error } = await supabase
             .from(SUPABASE_CONFIG.tableName)
-            .select('lat, lng, city, country');
+            .select('lat, lng, city, country')
+            .limit(1000);
 
         if (error) {
-            console.error('Error loading visitor data:', error);
-            return [];
+            console.warn('Database may be paused, using fallback data:', error.message);
+            databaseConnected = false;
+            return getFallbackData();
+        }
+
+        // If we got here, database is connected
+        if (!databaseConnected) {
+            console.log('Database connection restored!');
+            databaseConnected = true;
+        }
+
+        // If no data yet, return fallback data
+        if (!data || data.length === 0) {
+            console.log('No visitor data in database, using fallback data');
+            return getFallbackData();
         }
 
         // Aggregate data by location
@@ -141,11 +197,15 @@ async function loadVisitorData() {
             color: loc.visits > 5 ? '#3b82f6' : loc.visits > 2 ? '#60a5fa' : '#93c5fd'
         }));
 
-        console.log(`Loaded ${visitorData.length} visitor locations`);
+        // Cache the successful data for future use
+        cacheVisitorData(visitorData);
+
+        console.log(`Loaded ${visitorData.length} visitor locations from database`);
         return visitorData;
     } catch (error) {
-        console.error('Error in loadVisitorData:', error);
-        return [];
+        console.warn('Error loading visitor data, using fallback data:', error.message);
+        databaseConnected = false;
+        return getFallbackData();
     }
 }
 
@@ -159,57 +219,85 @@ async function checkForNewVisitors(globe) {
     }
 
     try {
-        // Check for visitors added since last check
+        // Try to check for visitors - this also serves as a database health check
         const { data, error } = await supabase
             .from(SUPABASE_CONFIG.tableName)
             .select('id, timestamp')
-            .gt('timestamp', lastCheckTime.toISOString())
-            .order('timestamp', { ascending: false });
+            .order('timestamp', { ascending: false })
+            .limit(10);
 
         if (error) {
-            console.error('Error checking for new visitors:', error);
+            // Database might be paused
+            if (databaseConnected) {
+                console.warn('Database connection lost, will retry...');
+                databaseConnected = false;
+            }
             return;
         }
 
-        if (data && data.length > 0) {
-            console.log(`${data.length} new visitor(s) detected, updating globe...`);
-            lastCheckTime = new Date(data[0].timestamp);
+        // Database is connected - check if we just reconnected
+        const wasDisconnected = !databaseConnected;
+        databaseConnected = true;
 
-            // Reload all data and update globe
+        if (wasDisconnected) {
+            // Just reconnected! Reload all data
+            console.log('Database reconnected! Refreshing visitor data...');
             const visitorData = await loadVisitorData();
             globe.pointsData(visitorData);
+
+            // Also try to track current visitor now
+            trackVisitor();
+            return;
+        }
+
+        // Check for new visitors since last check
+        if (data && data.length > 0) {
+            const latestTimestamp = new Date(data[0].timestamp);
+            if (latestTimestamp > lastCheckTime) {
+                const newVisitors = data.filter(v => new Date(v.timestamp) > lastCheckTime);
+                if (newVisitors.length > 0) {
+                    console.log(`${newVisitors.length} new visitor(s) detected, updating globe...`);
+                    lastCheckTime = latestTimestamp;
+
+                    // Reload all data and update globe
+                    const visitorData = await loadVisitorData();
+                    globe.pointsData(visitorData);
+                }
+            }
         }
     } catch (error) {
-        console.error('Error in checkForNewVisitors:', error);
+        if (databaseConnected) {
+            console.warn('Database check failed:', error.message);
+            databaseConnected = false;
+        }
     }
 }
 
 function startPolling(globe, intervalMs = 30000) {
-    if (!supabase) {
-        console.warn('Supabase not initialized, polling disabled');
-        return;
-    }
-
     // Clear any existing interval
     if (pollingInterval) {
         clearInterval(pollingInterval);
     }
 
-    // Start polling for new visitors
+    // Start polling - this will also check for database recovery
     pollingInterval = setInterval(() => {
         checkForNewVisitors(globe);
     }, intervalMs);
 
-    console.log(`Started polling for new visitors every ${intervalMs/1000} seconds`);
+    console.log(`Started polling every ${intervalMs/1000} seconds (also checks for database recovery)`);
 }
 
 function stopPolling() {
     if (pollingInterval) {
         clearInterval(pollingInterval);
         pollingInterval = null;
-        console.log('Stopped polling for new visitors');
+        console.log('Stopped polling');
     }
 }
+
+// Globe initialization retry counter
+let globeRetryCount = 0;
+const MAX_GLOBE_RETRIES = 10;
 
 // 3D Globe Initialization
 async function initGlobe() {
@@ -222,28 +310,40 @@ async function initGlobe() {
 
     // Check if Globe library is loaded
     if (typeof Globe === 'undefined') {
-        console.error('Globe.gl library not loaded. Retrying in 500ms...');
-        setTimeout(initGlobe, 500);
+        globeRetryCount++;
+        if (globeRetryCount <= MAX_GLOBE_RETRIES) {
+            console.warn(`Globe.gl library not loaded yet. Retry ${globeRetryCount}/${MAX_GLOBE_RETRIES}...`);
+            setTimeout(initGlobe, 500);
+        } else {
+            console.error('Globe.gl library failed to load. The globe requires an internet connection.');
+            // Show a message in the container
+            container.innerHTML = '<div style="text-align: center; padding: 20px; color: #666; font-size: 12px;">Globe requires internet connection</div>';
+        }
         return;
     }
 
     console.log('Initializing globe...');
 
     try {
-        // Initialize Supabase if config is available
-        const supabaseReady = typeof SUPABASE_CONFIG !== 'undefined' &&
-                               SUPABASE_CONFIG.url !== 'YOUR_SUPABASE_URL';
+        // Check if Supabase config is available
+        const supabaseConfigured = typeof SUPABASE_CONFIG !== 'undefined' &&
+                                    SUPABASE_CONFIG.url !== 'YOUR_SUPABASE_URL';
 
-        if (supabaseReady) {
-            initSupabase();
-            // Track current visitor
-            await trackVisitor();
+        if (supabaseConfigured) {
+            // Try to initialize Supabase (may fail if database is paused)
+            const initialized = initSupabase();
+            if (initialized && supabase) {
+                // Try to track visitor (won't block globe initialization if it fails)
+                trackVisitor().catch(err => {
+                    console.warn('Could not track visitor (database may be paused):', err.message);
+                });
+            }
         }
 
-        // Load visitor data (from Supabase or use sample data)
+        // Load visitor data (will use default data if database is unavailable)
         const visitorData = await loadVisitorData();
 
-        // Create the globe
+        // Create the globe - this always works regardless of database status
         globeInstance = Globe()
             (container)
             .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
@@ -260,7 +360,7 @@ async function initGlobe() {
             .height(280)
             .pointLabel(d => `
                 <div style="background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; color: white;">
-                    <strong>${d.city}, ${d.country}</strong><br/>
+                    <strong>${d.city || 'Unknown'}, ${d.country || 'Unknown'}</strong><br/>
                     Visits: ${d.visits || 1}
                 </div>
             `);
@@ -274,10 +374,13 @@ async function initGlobe() {
         globeInstance.pointOfView({ lat: 38, lng: -83, altitude: 2.5 }, 0);
 
         console.log('Globe initialized successfully!');
+        if (!databaseConnected) {
+            console.log('Using default visitor data (database may be paused). Will auto-update when database recovers.');
+        }
 
-        // Start polling for updates if Supabase is ready (works with free tier)
-        if (supabaseReady && supabase) {
-            // Poll every 30 seconds (you can adjust this)
+        // Always start polling if Supabase is configured
+        // This allows automatic recovery when database comes back online
+        if (supabaseConfigured) {
             startPolling(globeInstance, 30000);
         }
 
@@ -296,6 +399,25 @@ async function initGlobe() {
         });
     } catch (error) {
         console.error('Error initializing globe:', error);
+        // Even if there's an error, try to show a basic globe with default data
+        try {
+            globeInstance = Globe()
+                (container)
+                .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .pointsData(DEFAULT_VISITOR_DATA)
+                .pointAltitude('size')
+                .pointColor('color')
+                .pointRadius(0.6)
+                .atmosphereColor('#3b82f6')
+                .atmosphereAltitude(0.15)
+                .width(container.offsetWidth)
+                .height(280);
+            globeInstance.controls().autoRotate = true;
+            globeInstance.controls().autoRotateSpeed = 0.5;
+            console.log('Globe initialized with fallback data');
+        } catch (fallbackError) {
+            console.error('Could not initialize globe:', fallbackError);
+        }
     }
 }
 
