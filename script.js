@@ -384,24 +384,25 @@ document.addEventListener('DOMContentLoaded', () => {
         initGlobe();
     }, 500);
 
-    // Set up theme toggle button after sidebar is loaded
-    setTimeout(() => {
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        if (themeToggleBtn) {
-            // Set initial button state based on current theme
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const icon = themeToggleBtn.querySelector('.theme-toggle-icon');
-            const text = themeToggleBtn.querySelector('.theme-toggle-text');
+    // Set up theme toggle button
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+        // Set initial button state based on current theme
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const icon = themeToggleBtn.querySelector('.theme-toggle-icon');
+        const text = themeToggleBtn.querySelector('.theme-toggle-text');
 
-            if (currentTheme === 'dark') {
-                icon.textContent = '☀️';
-                text.textContent = 'Light Mode';
-            }
-
-            // Add click event listener
-            themeToggleBtn.addEventListener('click', toggleTheme);
+        if (currentTheme === 'dark') {
+            icon.textContent = '☀️';
+            text.textContent = 'Light Mode';
         }
-    }, 100);
+
+        // Add click event listener
+        themeToggleBtn.addEventListener('click', toggleTheme);
+        console.log('Theme toggle button initialized');
+    } else {
+        console.error('Theme toggle button not found');
+    }
 
     // Smooth scroll behavior for internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

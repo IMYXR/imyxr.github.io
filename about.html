@@ -218,6 +218,39 @@
         </main>
     </div>
 
+    <!-- Inline theme toggle script (works without external dependencies) -->
+    <script>
+        // Initialize theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            if (themeToggleBtn) {
+                // Set initial button state
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const icon = themeToggleBtn.querySelector('.theme-toggle-icon');
+                const text = themeToggleBtn.querySelector('.theme-toggle-text');
+                if (currentTheme === 'dark') {
+                    icon.textContent = '☀️';
+                    text.textContent = 'Light Mode';
+                }
+
+                // Add click handler
+                themeToggleBtn.addEventListener('click', function() {
+                    const current = document.documentElement.getAttribute('data-theme');
+                    const newTheme = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    icon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+                    text.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+                });
+            }
+        });
+    </script>
+
     <!-- Three.js and Globe.gl for 3D Globe -->
     <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
     <script src="https://unpkg.com/globe.gl@2.27.2/dist/globe.gl.min.js"></script>
