@@ -267,12 +267,11 @@ body {
 /* Sidebar Styles */
 .sidebar {
     padding: var(--spacing-xl);
-    position: sticky;
-    top: var(--spacing-lg);
     height: fit-content;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    align-self: start;
 }
 
 .profile-section {
@@ -845,8 +844,7 @@ body {
     }
 
     .sidebar {
-        position: relative;
-        top: 0;
+        align-self: stretch;
     }
 
     .project-card {
