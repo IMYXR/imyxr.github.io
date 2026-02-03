@@ -189,10 +189,22 @@
 
     <!-- Inline theme toggle script (works without external dependencies) -->
     <script>
+        // Get theme based on local time (dark mode: 19:00 - 07:00)
+        function getTimeBasedTheme() {
+            const hour = new Date().getHours();
+            return (hour >= 19 || hour < 7) ? 'dark' : 'light';
+        }
+
         // Initialize theme
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            const manuallySet = localStorage.getItem('themeManuallySet');
+            let theme;
+            if (manuallySet === 'true') {
+                theme = localStorage.getItem('theme') || getTimeBasedTheme();
+            } else {
+                theme = getTimeBasedTheme();
+            }
+            document.documentElement.setAttribute('data-theme', theme);
         })();
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -213,8 +225,19 @@
                     const newTheme = current === 'dark' ? 'light' : 'dark';
                     document.documentElement.setAttribute('data-theme', newTheme);
                     localStorage.setItem('theme', newTheme);
+                    localStorage.setItem('themeManuallySet', 'true');
                     icon.textContent = newTheme === 'dark' ? '☀️' : '🌙';
                     text.textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+                });
+
+                // Double-click to reset to auto mode
+                themeToggleBtn.addEventListener('dblclick', function() {
+                    localStorage.removeItem('themeManuallySet');
+                    const autoTheme = getTimeBasedTheme();
+                    document.documentElement.setAttribute('data-theme', autoTheme);
+                    localStorage.setItem('theme', autoTheme);
+                    icon.textContent = autoTheme === 'dark' ? '☀️' : '🌙';
+                    text.textContent = autoTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
                 });
             }
         });
