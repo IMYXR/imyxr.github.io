@@ -332,14 +332,24 @@ function toggleTheme() {
 // Initialize theme before page loads
 initTheme();
 
-// Load sidebar content dynamically
+// Load sidebar content dynamically (only if not already present in HTML)
 function loadSidebar() {
     const sidebar = document.querySelector('.sidebar');
-    if (!sidebar) return;
+    if (!sidebar) {
+        console.error('Sidebar element not found');
+        return;
+    }
+
+    // Check if sidebar already has content (inline HTML)
+    if (sidebar.children.length > 0) {
+        console.log('Sidebar content already present in HTML');
+        return;
+    }
 
     // Load sidebar from template (defined in sidebar-template.js)
     if (typeof sidebarTemplate !== 'undefined') {
         sidebar.innerHTML = sidebarTemplate;
+        console.log('Sidebar content loaded from template');
 
         // Set active navigation button based on current page
         const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
@@ -362,7 +372,11 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM Content Loaded');
 
     // Load sidebar first
-    loadSidebar();
+    try {
+        loadSidebar();
+    } catch (error) {
+        console.error('Error loading sidebar:', error);
+    }
 
     // Initialize 3D globe after sidebar is loaded
     setTimeout(() => {
