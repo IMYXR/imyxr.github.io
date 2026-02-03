@@ -1,7 +1,7 @@
 // Optimized script for better performance
 
-// Supabase client instance
-let supabase = null;
+// Supabase client instance (use different name to avoid conflict with CDN global)
+let supabaseClient = null;
 let globeInstance = null;
 
 // Initialize Supabase
@@ -19,7 +19,7 @@ function initSupabase() {
 
     try {
         // Create Supabase client using the global library
-        supabase = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+        supabaseClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
         console.log('Supabase initialized successfully');
         return true;
     } catch (error) {
@@ -57,7 +57,7 @@ async function getVisitorLocation() {
 
 // Track visitor in Supabase
 async function trackVisitor() {
-    if (!supabase) {
+    if (!supabaseClient) {
         console.warn('Supabase not initialized, skipping visitor tracking');
         return;
     }
@@ -75,7 +75,7 @@ async function trackVisitor() {
             timestamp: new Date().toISOString()
         };
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from(SUPABASE_CONFIG.tableName)
             .insert([visitorData]);
 
@@ -138,14 +138,14 @@ function getFallbackData() {
 
 // Load visitor data from Supabase
 async function loadVisitorData() {
-    if (!supabase) {
+    if (!supabaseClient) {
         console.warn('Supabase not initialized, using fallback data');
         databaseConnected = false;
         return getFallbackData();
     }
 
     try {
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from(SUPABASE_CONFIG.tableName)
             .select('lat, lng, city, country')
             .limit(1000);
@@ -214,13 +214,13 @@ let lastCheckTime = new Date();
 let pollingInterval = null;
 
 async function checkForNewVisitors(globe) {
-    if (!supabase) {
+    if (!supabaseClient) {
         return;
     }
 
     try {
         // Try to check for visitors - this also serves as a database health check
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from(SUPABASE_CONFIG.tableName)
             .select('id, timestamp')
             .order('timestamp', { ascending: false })
@@ -332,7 +332,7 @@ async function initGlobe() {
         if (supabaseConfigured) {
             // Try to initialize Supabase (may fail if database is paused)
             const initialized = initSupabase();
-            if (initialized && supabase) {
+            if (initialized && supabaseClient) {
                 // Try to track visitor (won't block globe initialization if it fails)
                 trackVisitor().catch(err => {
                     console.warn('Could not track visitor (database may be paused):', err.message);
@@ -342,6 +342,21 @@ async function initGlobe() {
 
         // Load visitor data (will use default data if database is unavailable)
         const visitorData = await loadVisitorData();
+
+        // Get container width with fallback
+        let containerWidth = container.offsetWidth;
+        if (containerWidth <= 0) {
+            // Fallback width if container hasn't rendered yet
+            containerWidth = container.clientWidth || container.getBoundingClientRect().width || 280;
+            console.log('Using fallback width:', containerWidth);
+        }
+
+        // If still no width, wait and retry
+        if (containerWidth <= 0) {
+            console.log('Container has no width yet, retrying in 500ms...');
+            setTimeout(initGlobe, 500);
+            return;
+        }
 
         // Create the globe - this always works regardless of database status
         globeInstance = Globe()
@@ -356,7 +371,7 @@ async function initGlobe() {
             .pointsMerge(true)
             .atmosphereColor('#3b82f6')
             .atmosphereAltitude(0.15)
-            .width(container.offsetWidth)
+            .width(containerWidth)
             .height(280)
             .pointLabel(d => `
                 <div style="background: rgba(0,0,0,0.8); padding: 8px; border-radius: 4px; color: white;">
@@ -401,6 +416,7 @@ async function initGlobe() {
         console.error('Error initializing globe:', error);
         // Even if there's an error, try to show a basic globe with default data
         try {
+            const fallbackWidth = container.offsetWidth || container.clientWidth || 280;
             globeInstance = Globe()
                 (container)
                 .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
@@ -410,7 +426,7 @@ async function initGlobe() {
                 .pointRadius(0.6)
                 .atmosphereColor('#3b82f6')
                 .atmosphereAltitude(0.15)
-                .width(container.offsetWidth)
+                .width(fallbackWidth)
                 .height(280);
             globeInstance.controls().autoRotate = true;
             globeInstance.controls().autoRotateSpeed = 0.5;
@@ -500,11 +516,17 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error loading sidebar:', error);
     }
 
-    // Initialize 3D globe after sidebar is loaded
-    setTimeout(() => {
-        console.log('Attempting to initialize globe...');
-        initGlobe();
-    }, 500);
+    // Initialize 3D globe after page is fully loaded
+    // Use window.onload to ensure all resources (including CSS) are loaded
+    if (document.readyState === 'complete') {
+        console.log('Page already loaded, initializing globe...');
+        setTimeout(initGlobe, 100);
+    } else {
+        window.addEventListener('load', () => {
+            console.log('Window load event, initializing globe...');
+            setTimeout(initGlobe, 100);
+        });
+    }
 
     // Set up theme toggle button
     const themeToggleBtn = document.getElementById('theme-toggle');

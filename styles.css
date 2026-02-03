@@ -459,6 +459,7 @@ body {
 /* 3D Globe Container */
 #globe-container {
     width: 100%;
+    min-width: 200px;
     height: 280px;
     background: rgba(10, 25, 47, 0.8);
     border-radius: var(--border-radius-md);
