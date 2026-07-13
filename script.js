@@ -437,44 +437,10 @@ async function initGlobe() {
     }
 }
 
-// Theme Management
-function getTimeBasedTheme() {
-    // Use dark mode during evening/night hours (6 PM to 6 AM), light otherwise
-    const hour = new Date().getHours();
-    return (hour >= 18 || hour < 6) ? 'dark' : 'light';
-}
-
-function initTheme() {
-    // Respect an explicit saved preference; otherwise pick based on the current time
-    const savedTheme = localStorage.getItem('theme') || getTimeBasedTheme();
-    document.documentElement.setAttribute('data-theme', savedTheme);
-}
-
-function toggleTheme() {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-
-    // Update button text and icon
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (toggleBtn) {
-        const icon = toggleBtn.querySelector('.theme-toggle-icon');
-        const text = toggleBtn.querySelector('.theme-toggle-text');
-
-        if (newTheme === 'dark') {
-            icon.textContent = '☀️';
-            text.textContent = 'Light Mode';
-        } else {
-            icon.textContent = '🌙';
-            text.textContent = 'Dark Mode';
-        }
-    }
-}
-
-// Initialize theme before page loads
-initTheme();
+// Theme Management is handled by the inline <head> script on each page
+// (getTimeBasedTheme + auto/manual/reset logic). It runs before paint to
+// avoid a flash of the wrong theme, so it must not be duplicated here —
+// a second click handler would toggle the theme twice per press.
 
 // Load sidebar content dynamically (only if not already present in HTML)
 function loadSidebar() {
@@ -534,25 +500,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Set up theme toggle button
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    if (themeToggleBtn) {
-        // Set initial button state based on current theme
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const icon = themeToggleBtn.querySelector('.theme-toggle-icon');
-        const text = themeToggleBtn.querySelector('.theme-toggle-text');
-
-        if (currentTheme === 'dark') {
-            icon.textContent = '☀️';
-            text.textContent = 'Light Mode';
-        }
-
-        // Add click event listener
-        themeToggleBtn.addEventListener('click', toggleTheme);
-        console.log('Theme toggle button initialized');
-    } else {
-        console.error('Theme toggle button not found');
-    }
+    // Theme toggle is wired up by each page's inline <head> script — do not
+    // attach another handler here (it would double-toggle on every click).
 
     // Smooth scroll behavior for internal links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
