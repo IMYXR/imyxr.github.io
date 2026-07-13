@@ -438,9 +438,15 @@ async function initGlobe() {
 }
 
 // Theme Management
+function getTimeBasedTheme() {
+    // Use dark mode during evening/night hours (6 PM to 6 AM), light otherwise
+    const hour = new Date().getHours();
+    return (hour >= 18 || hour < 6) ? 'dark' : 'light';
+}
+
 function initTheme() {
-    // Check for saved theme preference or default to 'light'
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // Respect an explicit saved preference; otherwise pick based on the current time
+    const savedTheme = localStorage.getItem('theme') || getTimeBasedTheme();
     document.documentElement.setAttribute('data-theme', savedTheme);
 }
 
