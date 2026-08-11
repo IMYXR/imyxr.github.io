@@ -442,51 +442,13 @@ async function initGlobe() {
 // avoid a flash of the wrong theme, so it must not be duplicated here —
 // a second click handler would toggle the theme twice per press.
 
-// Load sidebar content dynamically (only if not already present in HTML)
-function loadSidebar() {
-    const sidebar = document.querySelector('.sidebar');
-    if (!sidebar) {
-        console.error('Sidebar element not found');
-        return;
-    }
-
-    // Check if sidebar already has content (inline HTML)
-    if (sidebar.children.length > 0) {
-        console.log('Sidebar content already present in HTML');
-        return;
-    }
-
-    // Load sidebar from template (defined in sidebar-template.js)
-    if (typeof sidebarTemplate !== 'undefined') {
-        sidebar.innerHTML = sidebarTemplate;
-        console.log('Sidebar content loaded from template');
-
-        // Set active navigation button based on current page
-        const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
-        const navButtons = sidebar.querySelectorAll('.nav-btn');
-        navButtons.forEach(btn => {
-            const pageName = btn.getAttribute('data-page');
-            if (pageName === currentPage) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    } else {
-        console.error('Sidebar template not loaded. Make sure sidebar-template.js is included.');
-    }
-}
+// The sidebar is rendered by sidebar.js, which runs synchronously while the
+// page is parsing (see the <script> tag right after <aside class="sidebar">).
+// By the time anything here runs, the sidebar is already in the DOM.
 
 // Optimized page load animation - runs once only
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM Content Loaded');
-
-    // Load sidebar first
-    try {
-        loadSidebar();
-    } catch (error) {
-        console.error('Error loading sidebar:', error);
-    }
 
     // Initialize 3D globe after page is fully loaded
     // Use window.onload to ensure all resources (including CSS) are loaded
