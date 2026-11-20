@@ -5,6 +5,7 @@ import About from '@/components/home/About';
 import type { VisitorMapSettings } from '@/lib/visitors';
 import SelectedPublications from '@/components/home/SelectedPublications';
 import News, { NewsItem } from '@/components/home/News';
+import Notice, { type NoticeAction } from '@/components/home/Notice';
 import PublicationsList from '@/components/publications/PublicationsList';
 import TextPage from '@/components/pages/TextPage';
 import CardPage from '@/components/pages/CardPage';
@@ -16,7 +17,7 @@ import { useLocaleStore } from '@/lib/stores/localeStore';
 
 interface SectionConfig {
   id: string;
-  type: 'markdown' | 'publications' | 'list';
+  type: 'markdown' | 'publications' | 'list' | 'notice';
   title?: string;
   source?: string;
   filter?: string;
@@ -24,6 +25,12 @@ interface SectionConfig {
   content?: string;
   publications?: Publication[];
   items?: NewsItem[];
+  // A notice is written out in the page's own file: see Notice.tsx.
+  label?: string;
+  highlight?: string;
+  text?: string;
+  topics?: string[];
+  actions?: NoticeAction[];
 }
 
 type PageData =
@@ -103,6 +110,19 @@ export default function HomePageClient({ dataByLocale, defaultLocale }: HomePage
                         key={section.id}
                         items={section.items || []}
                         title={section.title}
+                      />
+                    );
+                  case 'notice':
+                    return (
+                      <Notice
+                        key={section.id}
+                        label={section.label}
+                        title={section.title}
+                        highlight={section.highlight}
+                        text={section.text}
+                        topics={section.topics}
+                        actions={section.actions}
+                        email={data.social.email}
                       />
                     );
                   default:

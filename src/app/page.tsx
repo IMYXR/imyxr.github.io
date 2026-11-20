@@ -11,7 +11,8 @@ import type { AttendingItem } from '@/components/home/Profile';
 
 interface SectionConfig {
   id: string;
-  type: 'markdown' | 'publications' | 'list';
+  // A 'notice' carries its own text in the page's file and is passed on as it is.
+  type: 'markdown' | 'publications' | 'list' | 'notice';
   title?: string;
   source?: string;
   filter?: string;

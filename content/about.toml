@@ -30,6 +30,28 @@ type = "markdown"
 source = "bio.md"
 title = "About"
 
+# A highlighted notice: the gold card. Delete this block (down to the next "[[sections]]")
+# to take it down. `label` is the small line beside the pulsing dot, `highlight` the words
+# of the title marked in gold, `topics` the pills; all three are optional.
+[[sections]]
+id = "notice"
+type = "notice"
+label = "Open to opportunities"
+title = "Seeking a Summer 2027 Research Internship"
+highlight = "Summer 2027"
+text = "I'm actively looking for research intern positions in areas related to:"
+topics = ["Explainable AI", "Human-AI Interaction", "Agentic AI in XR"]
+
+# Its buttons, also optional: the first is the main one. "email" stands for the address
+# in config.toml; an address that starts with "/" is a page of this site.
+[[sections.actions]]
+label = "Get in touch"
+href = "email"
+
+[[sections.actions]]
+label = "View Resume"
+href = "/resume"
+
 [[sections]]
 id = "news"
 type = "list"

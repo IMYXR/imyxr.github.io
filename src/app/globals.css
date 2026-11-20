@@ -412,6 +412,209 @@ body {
   letter-spacing: -0.01em;
 }
 
+/* Notice --------------------------------------------------------------------------
+   The highlighted card among the home page sections (Notice.tsx), for an announcement
+   such as an internship search. It is the one block of the accent colour on a page of
+   white and grey, which is what makes it stand out; its colours are that accent at
+   different strengths and the page's own navy, so it stays in the palette.
+
+   .notice            the card: a wash of the accent, a rim of light like the one on the
+                      navigation's glass lens, and a soft glow underneath
+   .notice__label     the short line at the top
+   .notice__dot       the dot beside it, with a ring that keeps pulsing out of it
+   .notice__mark      the words of the headline picked out with a stroke of highlighter
+   .notice__topic     a subject, as a pill
+   .notice__button    the main action
+   .notice__link      a further action, as a link */
+.notice {
+  /* Small text in the accent colour: the accent itself is too pale to read on a light page. */
+  --notice-ink: #8a6420;
+  --notice-dot: var(--accent-dark);
+  --notice-rings: color-mix(in srgb, var(--accent) 50%, transparent);
+  /* The rings in the corner: five quarter circles, each fainter than the one inside it,
+     and the size they are drawn at (46px from one ring to the next at 270px). */
+  --notice-ring-shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='270' height='270' viewBox='0 0 270 270' fill='none' stroke='%23000'%3E%3Ccircle cx='270' cy='0' r='46' stroke-opacity='.9' vector-effect='non-scaling-stroke'/%3E%3Ccircle cx='270' cy='0' r='92' stroke-opacity='.7' vector-effect='non-scaling-stroke'/%3E%3Ccircle cx='270' cy='0' r='138' stroke-opacity='.5' vector-effect='non-scaling-stroke'/%3E%3Ccircle cx='270' cy='0' r='184' stroke-opacity='.32' vector-effect='non-scaling-stroke'/%3E%3Ccircle cx='270' cy='0' r='230' stroke-opacity='.16' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  --notice-ring-size: 270px;
+  --notice-glow: color-mix(in srgb, var(--accent-dark) 80%, transparent);
+  --notice-button: var(--primary);
+  --notice-button-hover: var(--primary-dark);
+  --notice-button-text: #ffffff;
+
+  position: relative;
+  isolation: isolate; /* the rim and the rings are layered under the text, inside the card */
+  border-radius: 0.75rem;
+  /* A pool of the accent in the upper right corner, over a wash that fades across the card. */
+  background:
+    radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 17%, var(--background)), color-mix(in srgb, var(--accent) 7%, var(--background)));
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.05),
+    0 14px 30px -18px var(--notice-glow);
+  /* The same response to the pointer as the other cards of the home page. */
+  transition: scale 200ms ease, box-shadow 200ms ease;
+}
+
+.notice:hover {
+  scale: 1.02;
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 0.05),
+    0 22px 38px -18px var(--notice-glow);
+}
+
+.dark .notice {
+  --notice-ink: var(--accent);
+  --notice-dot: var(--accent);
+  --notice-rings: color-mix(in srgb, var(--accent) 34%, transparent);
+  --notice-glow: color-mix(in srgb, var(--accent) 50%, transparent);
+  --notice-button: var(--accent);
+  --notice-button-hover: var(--accent-light);
+  --notice-button-text: #0f172a;
+
+  /* On the dark theme it is one of the page's slate cards, warmed a little. */
+  background:
+    radial-gradient(90% 130% at 100% 0%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 60%),
+    linear-gradient(135deg, color-mix(in srgb, var(--accent) 9%, var(--neutral-800)), color-mix(in srgb, var(--accent) 3%, var(--neutral-800)));
+}
+
+.notice::before,
+.notice::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* The rim: a gradient with everything but a 1px ring masked away, strongest at the corner
+   towards the light and at the one opposite. */
+.notice::before {
+  padding: 1px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--accent) 95%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 40%, transparent) 45%,
+    color-mix(in srgb, var(--accent) 75%, transparent) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* Rings spreading from the upper right corner and fading as they go: the ripple of the
+   dot, drawn large. The accent colour shows through a mask in the shape of the rings; they
+   are a drawing and not a gradient because Firefox breaks gradient lines this fine into
+   dots. */
+.notice::after {
+  background: var(--notice-rings);
+  -webkit-mask: var(--notice-ring-shape) top right / var(--notice-ring-size) no-repeat;
+  mask: var(--notice-ring-shape) top right / var(--notice-ring-size) no-repeat;
+}
+
+/* On a phone the card is narrow and its text runs the full width: the rings are drawn
+   smaller, so that they stay in the corner and clear of the words. */
+@media (max-width: 40rem) {
+  .notice {
+    --notice-ring-size: 176px;
+  }
+}
+
+.notice__label {
+  color: var(--notice-ink);
+}
+
+.notice__dot {
+  position: relative;
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background: var(--notice-dot);
+}
+
+.notice__dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  animation: notice-pulse 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes notice-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  75%, 100% {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+/* Without motion the ring stays as a still halo round the dot. */
+@media (prefers-reduced-motion: reduce) {
+  .notice__dot::after {
+    animation: none;
+    transform: scale(2);
+    opacity: 0.3;
+  }
+}
+
+/* The stroke lies along the foot of the letters, like a highlighter drawn under them. */
+.notice__mark {
+  white-space: nowrap;
+  margin: 0 -0.1em;
+  padding: 0 0.1em;
+  border-radius: 0.15em;
+  background: linear-gradient(to top,
+    transparent 5%, color-mix(in srgb, var(--accent) 62%, transparent) 5% 36%, transparent 36%);
+}
+
+/* Light letters would be lost against a stroke of the accent, so on the dark theme it is
+   a line drawn below them instead. */
+.dark .notice__mark {
+  background: linear-gradient(to top,
+    transparent 4%, color-mix(in srgb, var(--accent) 90%, transparent) 4% 15%, transparent 15%);
+}
+
+.notice__topic {
+  border: 1px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  background: rgb(255 255 255 / 0.72);
+}
+
+.dark .notice__topic {
+  border-color: color-mix(in srgb, var(--accent) 42%, transparent);
+  background: rgb(255 255 255 / 0.06);
+}
+
+.notice__button {
+  background: var(--notice-button);
+  color: var(--notice-button-text);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.18);
+  transition: background-color 200ms ease, box-shadow 200ms ease;
+}
+
+.notice__button:hover {
+  background: var(--notice-button-hover);
+  box-shadow: 0 6px 14px -6px rgb(15 23 42 / 0.45);
+}
+
+.notice__link {
+  color: var(--notice-ink);
+  transition: background-color 200ms ease;
+}
+
+.notice__link:hover {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* Reached with the keyboard. An outline, because the button's shadow is already in use. */
+.notice__button:focus-visible,
+.notice__link:focus-visible {
+  outline: 2px solid var(--notice-ink);
+  outline-offset: 2px;
+}
+
 /* Venue logos -----------------------------------------------------------------
    The logos that stand in for a venue's name on a publication, set straight on the page
    with no backing. */

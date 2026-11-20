@@ -13,6 +13,7 @@ Everything you normally change lives in `content/`. No code changes are needed.
 | Name, title, avatar, social links, navigation | `content/config.toml` |
 | Intro paragraph on the home page | `content/bio.md` |
 | Research interests, "Attending" list, order of home page sections | `content/about.toml` |
+| The highlighted notice on the home page (the gold card: its wording, topics and buttons) | the section with `type = "notice"` in `content/about.toml`; delete that block to take the notice down |
 | News | `content/news.toml` |
 | Publications | `content/publications.bib` |
 | The "Resume" page (education, experience, skills, awards) | `content/resume.toml` |
