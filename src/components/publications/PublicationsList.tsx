@@ -204,8 +204,9 @@ export default function PublicationsList({ config, publications, embedded = fals
                 </AnimatePresence>
             </div>
 
-            {/* Publications Grid */}
-            <div className="space-y-6">
+            {/* The list. How its cards are kept one size is explained at .publication-list
+                in globals.css. */}
+            <div className="publication-list">
                 {filteredPublications.length === 0 ? (
                     <div className="text-center py-12 text-neutral-500">
                         {messages.publications.noResults}
@@ -217,118 +218,131 @@ export default function PublicationsList({ config, publications, embedded = fals
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, delay: 0.1 * index }}
-                            className="bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-md transition-all duration-200"
+                            className={cn(
+                                "publication-card bg-white dark:bg-neutral-900 p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-800 hover:shadow-md transition-all duration-200",
+                                pub.preview && "publication-card--figure"
+                            )}
                         >
                             {/* The list keeps each entry short: a thumbnail of one fixed shape and
                                 the citation. The whole figure and the description are in the
                                 preview that "More" (or the thumbnail) opens. */}
-                            <div className="flex flex-col md:flex-row gap-6">
-                                <PublicationThumbnail
-                                    publication={pub}
-                                    label={messages.publications.more}
-                                    onOpen={() => setPreviewId(pub.id)}
-                                />
-                                <div className="flex-grow min-w-0">
-                                    <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary mb-2 leading-tight`}>
-                                        <FormattedBibTeXText nodes={pub.titleNodes} fallback={pub.title} />
-                                    </h3>
-                                    <AuthorList
-                                        authors={pub.authors}
-                                        className={`${embedded ? "text-sm" : "text-base"} text-neutral-600 dark:text-neutral-400 mb-2`}
+                            {pub.preview && (
+                                <div className="publication-card__figure">
+                                    <PublicationThumbnail
+                                        publication={pub}
+                                        label={messages.publications.more}
+                                        onOpen={() => setPreviewId(pub.id)}
                                     />
-                                    <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
-                                        <PublicationVenue publication={pub} />
-                                        {pub.awards?.map((award) => (
-                                            <AwardBadge key={award} award={award} />
-                                        ))}
-                                    </p>
-
-                                    <div className="flex flex-wrap gap-2 mt-auto">
-                                        <PublicationLinks publication={pub} />
-                                        {pub.abstract && (
-                                            <button
-                                                onClick={() => setExpandedAbstractId(expandedAbstractId === pub.id ? null : pub.id)}
-                                                className={cn(
-                                                    "inline-flex items-center px-3 py-1 rounded-md text-xs font-medium transition-colors",
-                                                    expandedAbstractId === pub.id
-                                                        ? "bg-accent text-white"
-                                                        : "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 hover:bg-accent hover:text-white"
-                                                )}
-                                            >
-                                                <DocumentTextIcon className="h-3 w-3 mr-1.5" />
-                                                {messages.publications.abstract}
-                                            </button>
-                                        )}
-                                        {pub.bibtex && (
-                                            <button
-                                                onClick={() => setExpandedBibtexId(expandedBibtexId === pub.id ? null : pub.id)}
-                                                className={cn(
-                                                    "inline-flex items-center px-3 py-1 rounded-md text-xs font-medium transition-colors",
-                                                    expandedBibtexId === pub.id
-                                                        ? "bg-accent text-white"
-                                                        : "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 hover:bg-accent hover:text-white"
-                                                )}
-                                            >
-                                                <BookOpenIcon className="h-3 w-3 mr-1.5" />
-                                                {messages.publications.bibtex}
-                                            </button>
-                                        )}
-                                        {(pub.preview || pub.description) && (
-                                            <button
-                                                type="button"
-                                                onClick={() => setPreviewId(pub.id)}
-                                                aria-haspopup="dialog"
-                                                className={cn(CHIP_CLASS, CHIP_IDLE_CLASS, "cursor-pointer")}
-                                            >
-                                                <ArrowsPointingOutIcon className="h-3 w-3 mr-1.5" />
-                                                {messages.publications.more}
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    <AnimatePresence>
-                                        {expandedAbstractId === pub.id && pub.abstract ? (
-                                            <motion.div
-                                                key="abstract"
-                                                initial={{ opacity: 0, height: 0 }}
-                                                animate={{ opacity: 1, height: 'auto' }}
-                                                exit={{ opacity: 0, height: 0 }}
-                                                className="overflow-hidden mt-4"
-                                            >
-                                                <div className="bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
-                                                    <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed">
-                                                        {pub.abstract}
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        ) : null}
-                                        {expandedBibtexId === pub.id && pub.bibtex ? (
-                                            <motion.div
-                                                key="bibtex"
-                                                initial={{ opacity: 0, height: 0 }}
-                                                animate={{ opacity: 1, height: 'auto' }}
-                                                exit={{ opacity: 0, height: 0 }}
-                                                className="overflow-hidden mt-4"
-                                            >
-                                                <div className="relative bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
-                                                    <pre className="text-xs text-neutral-600 dark:text-neutral-500 overflow-x-auto whitespace-pre-wrap font-mono">
-                                                        {pub.bibtex}
-                                                    </pre>
-                                                    <button
-                                                        onClick={() => {
-                                                            navigator.clipboard.writeText(pub.bibtex || '');
-                                                            // Optional: Show copied feedback
-                                                        }}
-                                                        className="absolute top-2 right-2 p-1.5 rounded-md bg-white dark:bg-neutral-700 text-neutral-500 hover:text-accent shadow-sm border border-neutral-200 dark:border-neutral-600 transition-colors"
-                                                        title={messages.common.copyToClipboard}
-                                                    >
-                                                        <ClipboardDocumentIcon className="h-4 w-4" />
-                                                    </button>
-                                                </div>
-                                            </motion.div>
-                                        ) : null}
-                                    </AnimatePresence>
                                 </div>
+                            )}
+                            <div className="publication-card__citation">
+                                <h3 className={`${embedded ? "text-lg" : "text-xl"} font-semibold text-primary mb-2 leading-tight`}>
+                                    <FormattedBibTeXText nodes={pub.titleNodes} fallback={pub.title} />
+                                </h3>
+                                <AuthorList
+                                    authors={pub.authors}
+                                    className={`${embedded ? "text-sm" : "text-base"} text-neutral-600 dark:text-neutral-400 mb-2`}
+                                />
+                                <p className="text-sm font-medium text-neutral-800 dark:text-neutral-600 mb-3 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+                                    <PublicationVenue publication={pub} />
+                                    {pub.awards?.map((award) => (
+                                        <AwardBadge key={award} award={award} />
+                                    ))}
+                                </p>
+
+                                {/* Held to the bottom of the citation: in a card with less text than
+                                    the tallest, the spare room is above the buttons, and they sit at
+                                    the same place in every card. */}
+                                <div className="flex flex-wrap gap-2 mt-auto">
+                                    <PublicationLinks publication={pub} />
+                                    {pub.abstract && (
+                                        <button
+                                            onClick={() => setExpandedAbstractId(expandedAbstractId === pub.id ? null : pub.id)}
+                                            className={cn(
+                                                "inline-flex items-center px-3 py-1 rounded-md text-xs font-medium transition-colors",
+                                                expandedAbstractId === pub.id
+                                                    ? "bg-accent text-white"
+                                                    : "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 hover:bg-accent hover:text-white"
+                                            )}
+                                        >
+                                            <DocumentTextIcon className="h-3 w-3 mr-1.5" />
+                                            {messages.publications.abstract}
+                                        </button>
+                                    )}
+                                    {pub.bibtex && (
+                                        <button
+                                            onClick={() => setExpandedBibtexId(expandedBibtexId === pub.id ? null : pub.id)}
+                                            className={cn(
+                                                "inline-flex items-center px-3 py-1 rounded-md text-xs font-medium transition-colors",
+                                                expandedBibtexId === pub.id
+                                                    ? "bg-accent text-white"
+                                                    : "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 hover:bg-accent hover:text-white"
+                                            )}
+                                        >
+                                            <BookOpenIcon className="h-3 w-3 mr-1.5" />
+                                            {messages.publications.bibtex}
+                                        </button>
+                                    )}
+                                    {(pub.preview || pub.description) && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setPreviewId(pub.id)}
+                                            aria-haspopup="dialog"
+                                            className={cn(CHIP_CLASS, CHIP_IDLE_CLASS, "cursor-pointer")}
+                                        >
+                                            <ArrowsPointingOutIcon className="h-3 w-3 mr-1.5" />
+                                            {messages.publications.more}
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* What Abstract and BibTeX open. The element is there even with nothing
+                                open: it is the second of the card's two rows. The space above each
+                                panel is inside the part that unfolds, so that it opens with it. */}
+                            <div className="publication-card__panel">
+                                <AnimatePresence>
+                                    {expandedAbstractId === pub.id && pub.abstract ? (
+                                        <motion.div
+                                            key="abstract"
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="mt-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
+                                                <p className="text-sm text-neutral-600 dark:text-neutral-500 leading-relaxed">
+                                                    {pub.abstract}
+                                                </p>
+                                            </div>
+                                        </motion.div>
+                                    ) : null}
+                                    {expandedBibtexId === pub.id && pub.bibtex ? (
+                                        <motion.div
+                                            key="bibtex"
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="relative mt-4 bg-neutral-50 dark:bg-neutral-800 rounded-lg p-4 border border-neutral-200 dark:border-neutral-700">
+                                                <pre className="text-xs text-neutral-600 dark:text-neutral-500 overflow-x-auto whitespace-pre-wrap font-mono">
+                                                    {pub.bibtex}
+                                                </pre>
+                                                <button
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(pub.bibtex || '');
+                                                        // Optional: Show copied feedback
+                                                    }}
+                                                    className="absolute top-2 right-2 p-1.5 rounded-md bg-white dark:bg-neutral-700 text-neutral-500 hover:text-accent shadow-sm border border-neutral-200 dark:border-neutral-600 transition-colors"
+                                                    title={messages.common.copyToClipboard}
+                                                >
+                                                    <ClipboardDocumentIcon className="h-4 w-4" />
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    ) : null}
+                                </AnimatePresence>
                             </div>
                         </motion.div>
                     ))

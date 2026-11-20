@@ -423,6 +423,83 @@ body {
   max-width: 100%;
 }
 
+/* Publications list -------------------------------------------------------------
+   One card per publication. A card has two parts, one above the other: the citation, with
+   its figure beside it on a wide screen, and under it whatever the Abstract and BibTeX
+   buttons open.
+
+   Where the figure and the citation sit side by side, the cards are all one size. Each
+   card lays its two parts on two rows of the list's own grid (it is a subgrid), and the
+   rows that hold a citation are all as tall as the tallest of them. A panel that is opened
+   is in a row of its own, so it lengthens its own card and no other.
+
+   On a phone the parts are stacked and one card nearly fills the screen. There each card
+   keeps its own height: matching them would only pad the shorter ones with blank space. */
+.publication-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.publication-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* The space between cards is a margin and not the list's row gap: a gap would also fall
+   between the two rows of one card, and stay there, as blank space, in a card with
+   nothing open. */
+.publication-card:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.publication-card__figure {
+  margin-bottom: 1.5rem;
+}
+
+/* A column, so that the row of buttons can be held to its bottom edge. */
+.publication-card__citation {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.publication-card__panel {
+  min-width: 0;
+}
+
+@media (min-width: 48rem) {
+  .publication-card--figure {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  .publication-card__figure {
+    grid-area: 1 / 1;
+    margin-bottom: 0;
+  }
+
+  /* Columns -2 to -1 are the last column: the only one, or the one beside the figure. */
+  .publication-card__citation {
+    grid-area: 1 / -2 / auto / -1;
+  }
+
+  .publication-card__panel {
+    grid-area: 2 / -2 / auto / -1;
+  }
+
+  /* A browser without subgrid leaves the cards at their own heights, as on a phone. */
+  @supports (grid-template-rows: subgrid) {
+    .publication-list {
+      grid-auto-rows: minmax(0, 1fr) auto; /* citation, panel; citation, panel; … */
+    }
+
+    .publication-card {
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+    }
+  }
+}
+
 /* Publication preview ---------------------------------------------------------
    The page behind the "More" panel: dimmed a little and blurred. The dimming is kept
    light so that the blur is what you notice. */

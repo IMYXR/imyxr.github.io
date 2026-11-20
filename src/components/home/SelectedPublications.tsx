@@ -33,19 +33,21 @@ export default function SelectedPublications({ publications, title, enableOnePag
                     {messages.home.viewAll} →
                 </Link>
             </div>
-            <div className="space-y-4">
+            {/* Every row of the grid is as tall as the tallest card, so the cards are all one
+                size however many lines their titles and author lists take. */}
+            <div className="grid auto-rows-fr gap-4">
                 {publications.map((pub, index) => (
                     <motion.div
                         key={pub.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 * index }}
-                        className="bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg shadow-sm border border-neutral-200 dark:border-[rgba(148,163,184,0.24)] hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
+                        className="flex flex-col bg-neutral-50 dark:bg-neutral-800 p-4 rounded-lg shadow-sm border border-neutral-200 dark:border-[rgba(148,163,184,0.24)] hover:shadow-lg transition-all duration-200 hover:scale-[1.02]"
                     >
                         <h3 className="font-semibold text-primary mb-2 leading-tight">
                             <FormattedBibTeXText nodes={pub.titleNodes} fallback={pub.title} />
                         </h3>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-500 mb-1">
+                        <p className="text-sm text-neutral-600 dark:text-neutral-500">
                             {pub.authors.map((author, idx) => (
                                 <span key={idx}>
                                     <span className={`${author.isHighlighted ? 'font-semibold text-accent' : ''} ${author.isCoAuthor ? `underline underline-offset-4 ${author.isHighlighted ? 'decoration-accent' : 'decoration-neutral-400'}` : ''}`}>
@@ -58,7 +60,10 @@ export default function SelectedPublications({ publications, title, enableOnePag
                                 </span>
                             ))}
                         </p>
-                        <p className="text-sm text-neutral-600 dark:text-neutral-500 mt-2 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+                        {/* Held to the bottom edge: a card with less text than the tallest one
+                            keeps its spare room above this row, and the row sits at the same
+                            place in every card. */}
+                        <p className="mt-auto pt-2 text-sm text-neutral-600 dark:text-neutral-500 flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
                             <PublicationVenue publication={pub} logoClassName="h-5" />
                             {pub.awards?.map((award) => (
                                 <AwardBadge key={award} award={award} />
