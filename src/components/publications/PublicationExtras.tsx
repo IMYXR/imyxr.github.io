@@ -58,11 +58,31 @@ export function PublicationThumbnail({
 }
 
 /**
- * How tall a figure may be in the preview: whatever the window has left once the text
- * around it (about 28rem with a long title) is allowed for, so that the panel fits without
- * scrolling; never more than 60% of the window, nor so little that the figure is lost.
+ * How tall a figure may be in the preview.
+ *
+ * With the usual few lines of description the panel can fit the window whole, and the
+ * figure gets whatever the window has left once the text around it (about 28rem with a long
+ * title) is allowed for; never more than 60% of the window, nor so little that the figure
+ * is lost.
+ *
+ * With a long text, a whole abstract say, the panel has to be scrolled however small the
+ * figure is made, so squeezing the figure gains nothing: it gets the 60% outright.
  */
-const FIGURE_MAX_HEIGHT = 'clamp(10rem, 100vh - 28rem, 60vh)';
+const FIGURE_MAX_HEIGHT = {
+    fitted: 'clamp(10rem, 100vh - 28rem, 60vh)',
+    roomy: '60vh',
+};
+
+/**
+ * Past this many characters (about five lines of the panel on a wide screen) the text
+ * beside a figure is too long for the panel to fit a laptop window.
+ */
+const LONG_TEXT = 450;
+
+/** Whether a publication's text in the preview is long enough that the panel will scroll. */
+function hasLongText(publication: Publication): boolean {
+    return (publication.description?.length ?? 0) + (publication.abstract?.length ?? 0) > LONG_TEXT;
+}
 
 /**
  * The whole figure, at its own proportions. Clicking it opens the image file at full size.
@@ -73,6 +93,7 @@ export function PublicationFigure({ publication, label }: { publication: Publica
     const src = previewSrc(publication.preview);
     const { previewWidth: width, previewHeight: height } = publication;
     const sizes = '(max-width: 832px) 100vw, 768px';
+    const maxHeight = hasLongText(publication) ? FIGURE_MAX_HEIGHT.roomy : FIGURE_MAX_HEIGHT.fitted;
 
     return (
         <a
@@ -85,7 +106,7 @@ export function PublicationFigure({ publication, label }: { publication: Publica
             className="mx-auto block w-full overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white cursor-zoom-in transition-shadow duration-200 hover:shadow-md"
             // The width at which the image reaches the height limit. Capping the width,
             // rather than the height, keeps the frame tight around the image.
-            style={width && height ? { maxWidth: `calc(${FIGURE_MAX_HEIGHT} * ${(width / height).toFixed(4)})` } : undefined}
+            style={width && height ? { maxWidth: `calc(${maxHeight} * ${(width / height).toFixed(4)})` } : undefined}
         >
             {width && height ? (
                 <Image src={src} alt={publication.title} width={width} height={height} sizes={sizes} className="block w-full h-auto" />

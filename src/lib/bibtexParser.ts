@@ -146,6 +146,25 @@ function resolveUrl(url?: string): string | undefined {
   return value;
 }
 
+/** A field's value whatever the capitals in its name: arXiv writes "archivePrefix". */
+function readField(tags: Record<string, string>, name: string): string | undefined {
+  const key = Object.keys(tags).find(candidate => candidate.toLowerCase() === name);
+  return key === undefined ? undefined : tags[key];
+}
+
+/**
+ * Where a preprint is to be found. An entry as arXiv exports it (@misc, with `eprint` and
+ * `archivePrefix` in place of a journal) names no venue, so one is put together from those
+ * fields the way citation styles print it: "arXiv preprint arXiv:2610.07477".
+ */
+function preprintVenue(tags: Record<string, string>): string {
+  const eprint = cleanBibTeXString(readField(tags, 'eprint')).trim();
+  if (!eprint) return '';
+
+  const archive = cleanBibTeXString(readField(tags, 'archiveprefix')).trim() || 'arXiv';
+  return `${archive} preprint ${archive}:${eprint}`;
+}
+
 export function parseBibTeX(bibtexContent: string, locale?: string): Publication[] {
   const highlightNames = getHighlightNames(locale);
   const publicationsSlug = getPublicationsPage(locale)?.slug;
@@ -194,7 +213,8 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       researchArea: detectResearchArea(tags.title, keywords),
 
       // Optional fields
-      journal: cleanBibTeXString(tags.journal),
+      // The venue's name. A preprint has neither a journal nor a proceedings volume.
+      journal: cleanBibTeXString(tags.journal) || (tags.booktitle ? '' : preprintVenue(tags)),
       conference: cleanBibTeXString(tags.booktitle),
       volume: tags.volume,
       issue: tags.number,
