@@ -1,0 +1,79 @@
+[site]
+title = "Xiaoran Yang"
+description = "Personal website of Xiaoran Yang, PhD candidate in Computer Science at NC State University."
+favicon = "/favicon.svg"
+# last_updated = "November 19, 2026"   # optional; when omitted the footer shows the date of the last build
+
+[author]
+name = "Xiaoran Yang"
+# Chinese name. Shown after the site title in the top-left corner of every page,
+# as "Xiaoran Yang | 杨翛然". Delete this line to show the title alone.
+name_zh = "杨翛然"
+title = "PhD Candidate"
+institution = "NC State University"
+# Where the institution name links to (delete to remove the link)
+institution_url = "https://csc.ncsu.edu/"
+avatar = "/figures/Personal_icon.jpg"
+# The photo is shown whole, in a frame of its own proportions. Only a photo much taller or
+# wider than that allows (beyond 2:3 or 3:2) is cropped, and this then says which part of
+# it stays visible: any CSS object-position value, e.g. "center", "top", "25% center".
+avatar_position = "center"
+
+# Typesets the institution name like the NC State wordmark: red capitals in a condensed
+# face, the first part heavy and the second light. It is still ordinary text, not an image.
+# Delete this block to show the name as plain grey text instead.
+[author.institution_wordmark]
+strong = "NC State"
+light = "University"
+
+[social]
+# Contact information (leave blank or delete to hide)
+
+email = "xyang49@ncsu.edu"
+github = "https://github.com/IMYXR"
+linkedin = "https://www.linkedin.com/in/xiaoran-yang-0a5b58282/en"
+twitter = "https://twitter.com/shawnyanghci"
+google_scholar = "https://scholar.google.com/citations?user=Q2fKeo0AAAAJ&hl=en"
+# orcid = ""
+
+[features]
+# Show a like button on the about page
+enable_likes = false
+
+# Display all subpages on a single page
+enable_one_page_mode = false
+
+[i18n]
+# English only for now. To add Chinese later: set enabled = true, locales = ["en", "zh"],
+# and put translated copies of these files in content_zh/.
+enabled = false
+locales = ["en"]
+default_locale = "en"
+
+[[navigation]]
+title = "About"
+type = "page"
+target = "about"
+href = "/"
+
+[[navigation]]
+title = "Publications"
+type = "page"
+target = "publications"
+href = "/publications"
+
+[[navigation]]
+title = "Resume"
+type = "page"
+target = "resume"
+href = "/resume"
+
+# 3D visitor globe + visit logging (Supabase). The anon key is public by design;
+# what it may read and write is controlled by the table policies, see docs/SUPABASE_SETUP.md.
+[visitor_map]
+enabled = true
+# The globe in the left column of the home page. false hides it but keeps logging visits.
+show_globe = true
+supabase_url = "https://qtsbwwigxtnqenydmjmd.supabase.co"
+supabase_anon_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0c2J3d2lneHRucWVueWRtam1kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjExMTY1ODgsImV4cCI6MjA3NjY5MjU4OH0.OnqVsEUjnRoVwX6FBsGUNvH94cemW3qfNKPIoj9r5Dk"
+table = "visitors"

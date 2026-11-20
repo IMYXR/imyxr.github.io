@@ -1,0 +1,76 @@
+% One ordinary BibTeX field also adds a button:
+%   url         = {https://...} the paper at its publisher's (IEEE Xplore, ACM Digital
+%                               Library...): the "Link" button on the Publications page.
+%                               Being part of the citation, it stays in the BibTeX shown
+%                               to visitors
+%
+% Custom fields understood by the site (they are stripped from the BibTeX shown to visitors):
+%   selected    = {true}        show on the home page
+%   preview     = {/figures/x.webp}  figure: a cropped thumbnail in the list, shown whole in
+%                                    the "More" panel (PNG, JPG or WebP; a PDF cannot be
+%                                    displayed, export it as an image first); a bare
+%                                    filename is looked up in public/papers/
+%   description = {...}         short summary, shown in the "More" panel
+%   pdf         = {/papers/x.pdf}    the paper: a PDF in public/papers/. The site builds a
+%                                    page for it at /publications/<citation key>/ and the
+%                                    "PDF" button opens that page. Any other address
+%                                    (https://...) is linked to as it is
+%   award       = {...}         badge shown next to the venue
+%   venue_icon  = {a.webp, b.svg}    logo(s) shown in the lists instead of the venue's name;
+%                                    file names are looked up in
+%                                    public/figures/Conference Icon/ (SVG, PNG or WebP with
+%                                    a transparent background; not PDF). If "a-dark.webp"
+%                                    exists beside "a.webp" it is used on the dark theme.
+%                                    Without this field the venue's name and year are
+%                                    shown in words
+%   paper_type  = {Poster}      kind of paper, written next to the logo(s)
+%   code        = {https://...} target of the "Code" button
+%
+% Only the fields below came from the old site. Paste the official BibTeX from IEEE / ACM
+% (volume, pages, doi, ...) when it is available and keep the custom fields.
+
+@article{yang2026signals,
+  title = {Signals of AI Hallucination: Designing Hallucination-Aware Cues for Embodied Conversational Agents in VR},
+  author = {Xiaoran Yang and Yang Zhan and Xie He and Yuxuan Huang and Yichen Yu and Zhuo Wang and Noboru Matsuda and Qiao Jin},
+  journal = {IEEE Transactions on Visualization and Computer Graphics},
+  year = {2026},
+  month = oct,
+  url = {https://ieeexplore.ieee.org/abstract/document/11755421},
+  selected = {true},
+  preview = {/figures/ISMAR26.webp},
+  pdf = {/papers/ISMAR26_TVCG.pdf},
+  venue_icon = {ISMAR26.png, ieee.svg},
+  paper_type = {TVCG Journal Paper},
+  description = {A VR study of how gesture, icon, and text cues help users notice when an embodied AI agent may be hallucinating, and how each affects trust and immersion.}
+}
+
+@inproceedings{yang2026understanding,
+  title = {Understanding Prompt Construction and Interaction Challenges in LLM-Based Multi-Robot Systems for Spatial Tasks},
+  author = {Xiaoran Yang and Yang Zhan and Qiao Jin},
+  booktitle = {Extended Abstracts of the CHI Conference on Human Factors in Computing Systems (CHI EA '26)},
+  year = {2026},
+  month = apr,
+  url = {https://dl.acm.org/doi/full/10.1145/3772363.3798326},
+  selected = {true},
+  preview = {/figures/CHI26.webp},
+  pdf = {/papers/CHI26_Poster.pdf},
+  venue_icon = {CHI26.webp},
+  paper_type = {Poster},
+  description = {A qualitative study on LLM-based multi-robot systems. Our findings highlight how users prompt for coordination and reveal that gaps in system visibility necessitate better interface and prompting support.}
+}
+
+@inproceedings{yang2025tool,
+  title = {From Tool to Partner: Exploring the Roles of Embodiment on AI Agent in Pair Programming},
+  author = {Xiaoran Yang and Yang Zhan and Noboru Matsuda and Qiao Jin},
+  booktitle = {IEEE Symposium on Visual Languages and Human-Centric Computing (VL/HCC)},
+  year = {2025},
+  month = oct,
+  url = {https://ieeexplore.ieee.org/abstract/document/11303509},
+  selected = {true},
+  preview = {/figures/vlhcc.webp},
+  pdf = {/papers/VL_HCC_2025.pdf},
+  venue_icon = {VLHCC.webp},
+  paper_type = {Conference Paper},
+  award = {Best Short Paper Honorable Mention},
+  description = {To address communication challenges in AI pair programming, paper investigates the role of an embodied AI agent in supporting programming learning and improving the user experience.}
+}

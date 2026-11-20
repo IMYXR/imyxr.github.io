@@ -1,246 +1,81 @@
-# Personal Portfolio Website
+# xiaoranyang.com
 
-A modern, responsive portfolio website featuring glassmorphism design, GitHub activity visualization, and interactive 3D visitor map.
+Source for my personal academic homepage, [xiaoranyang.com](https://xiaoranyang.com).
 
-## Features
+It is a static site generated with Next.js from the [PRISM](https://github.com/xyjoey/PRISM) template (v1.3.3), with a few additions: a 3D visitor globe, a "liquid glass" navigation indicator, PDF links and award badges on publications, and an "Attending" card.
 
-- **Glassmorphism Design**: Modern glass-morphism UI with beautiful visual effects
-- **Responsive Layout**: Fully responsive design that works on all devices
-- **GitHub Activity Graph**: Real-time GitHub contribution visualization
-- **3D Visitor Map**: Interactive globe showing visitor locations (powered by Globe.gl & Supabase)
-- **PDF Viewer**: Built-in PDF viewer for publications
-- **Dark Mode**: Toggle between light and dark themes
-- **Multiple Pages**: Academic, About, and Links pages
-- **Dynamic Sidebar**: Shared navigation across all pages
-- **Skill Icons**: Professional skill badges from skillicons.dev
+## Editing content
 
-## Pages
+Everything you normally change lives in `content/`. No code changes are needed.
 
-- **Academic (index.html)**: Latest news, publications, and research projects
-- **About (about.html)**: Personal status, GitHub activity, skills, and interests
-- **Link (link.html)**: Social media and contact information
+| To change | Edit |
+| --- | --- |
+| Name, title, avatar, social links, navigation | `content/config.toml` |
+| Intro paragraph on the home page | `content/bio.md` |
+| Research interests, "Attending" list, order of home page sections | `content/about.toml` |
+| News | `content/news.toml` |
+| Publications | `content/publications.bib` |
+| The "Resume" page (education, experience, skills, awards) | `content/resume.toml` |
 
-## Technologies Used
+Images and PDFs go in `public/` and are served from the site root, so `public/figures/x.png` is `/figures/x.png`. Everything in `public/` is published, so it holds only what the site shows. The originals that web images were made from (a figure's source PDF, a full-size logo) are kept in `sources/`, which is not published.
 
-- HTML5, CSS3 (Glassmorphism effects)
-- Vanilla JavaScript
-- [Three.js](https://threejs.org/) - 3D graphics
-- [Globe.gl](https://globe.gl/) - Interactive 3D globe
-- [Supabase](https://supabase.com/) - Visitor tracking backend
-- [GitHub API](https://docs.github.com/en/rest) - Contribution data
-- [skillicons.dev](https://skillicons.dev/) - Skill badge icons
-- [PDF.js](https://mozilla.github.io/pdf.js/) - Browser-based PDF rendering
-- GitHub Pages - Static site hosting
+### Publications
 
-## Project Structure
+`content/publications.bib` is ordinary BibTeX plus a few extra fields that control how an entry is shown. They are stripped from the BibTeX that visitors can copy.
 
-```
-imyxr.github.io/
-├── index.html              # Main academic page
-├── about.html              # About page with GitHub activity
-├── link.html               # Social media links
-├── styles.css              # Main stylesheet
-├── script.js               # Main JavaScript
-├── sidebar-template.js     # Shared sidebar component
-├── github-activity.js      # GitHub contribution graph
-├── config.js               # Supabase config (gitignored)
-├── config.example.js       # Config template
-├── figures/                # Images and assets
-│   ├── IMG_09021.jpg       # Profile picture
-│   └── Project1.png        # Project images
-├── papers/                 # PDF publications
-│   ├── VL_HCC_2025.html   # PDF viewer page
-│   └── VL_HCC_2025.pdf    # Publication PDF
-└── .nojekyll              # Disable Jekyll processing
-```
+One ordinary field also adds a button: `url = {https://…}`, the paper at its publisher's (IEEE Xplore, the ACM Digital Library…), becomes the "Link" button on the Publications page. It is part of the citation, so it stays in the BibTeX.
 
-## Local Development
+| Field | Effect |
+| --- | --- |
+| `selected = {true}` | Also list the paper on the home page |
+| `preview = {/figures/x.webp}` | Figure. On the Publications page it is a thumbnail cropped to a fixed shape; the whole figure, at its own proportions, is in the panel that the entry's "More" button opens. Use PNG, JPG or WebP; a PDF cannot be displayed and has to be exported as an image first |
+| `description = {...}` | Short summary, shown in the "More" panel |
+| `pdf = {/papers/x.pdf}` | The paper itself, a PDF in `public/papers/`. Adds a "PDF" button, which opens a page of this site showing the paper (`/publications/<citation key>/`). An address elsewhere (`https://…`) is linked to directly instead |
+| `award = {...}` | Adds an award badge |
+| `venue_icon = {a.webp, b.svg}` | Logo, or several, shown instead of the venue's name in the two publication lists (the "More" panel always gives the name in words). File names are looked up in `public/figures/Conference Icon/`. Use SVG, PNG or WebP, trimmed to the artwork and with a transparent background; all logos are shown at the same height. A logo drawn in dark colours is hard to read on the dark theme: put a lighter version beside it as `a-dark.webp` (or `.svg`, `.png`) and it is used there automatically. Without this field the venue's name and year are shown in words |
+| `paper_type = {Poster}` | Kind of paper, written next to the logo |
+| `code = {https://...}` | Adds a "Code" button |
 
-### Option 1: Using Python HTTP Server (Recommended)
+Your name in the author list is highlighted automatically (it is matched against `author.name` in `config.toml`).
 
-To avoid CORS issues with GitHub API and proper file loading:
+### Adding a page
+
+Create `content/<name>.toml` with `type = "text"` (Markdown), `"card"` (list of cards) or `"publication"`, then add it to `[[navigation]]` in `content/config.toml`.
+
+## Local development
+
+Requires Node.js 22 or later.
 
 ```bash
-# Navigate to project directory
-cd imyxr.github.io
-
-# Start local server
-python -m http.server 8000
-
-# Or use the provided batch file (Windows)
-start-server.bat
+npm install
+npm run dev      # http://localhost:3000, reloads on change
+npm run build    # writes the static site to ./out
 ```
 
-Then open: `http://localhost:8000`
+## Deployment
 
-### Option 2: Direct File Opening
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes `out/` to GitHub Pages. This needs **Settings → Pages → Build and deployment → Source** set to **GitHub Actions**.
 
-Simply open `index.html` in your browser. Note: GitHub API may not work due to CORS restrictions.
+The custom domain is configured in the same settings page; `public/CNAME` is kept as a record of it.
 
-## GitHub Pages Deployment
+## Visitor map
 
-### Initial Setup
+The globe in the left column of the home page shows where recent visitors came from; hover a bar to see the place and its visit count. Each page load on the live site stores one row (approximate location from the visitor's IP) in a Supabase table; the globe reads the most recent 1,000 rows. Nothing is recorded during local development.
 
-1. **Create GitHub Repository**
-   ```bash
-   # Repository should be named: username.github.io
-   # For example: imyxr.github.io
-   ```
+Connection settings are in `content/config.toml` under `[visitor_map]`: `show_globe = false` hides the globe but keeps logging, `enabled = false` turns off both. Database setup and the recommended access rules are described in [docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md).
 
-2. **Push Your Code**
-   ```bash
-   git add .
-   git commit -m "Initial commit"
-   git branch -M main
-   git remote add origin https://github.com/IMYXR/imyxr.github.io.git
-   git push -u origin main
-   ```
+## Layout of the repository
 
-3. **Enable GitHub Pages**
-   - Go to repository Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: `main` / `(root)`
-   - Click Save
-
-4. **Wait for Deployment**
-   - GitHub Pages will automatically build and deploy
-   - Visit: `https://imyxr.github.io`
-   - First deployment may take 5-10 minutes
-
-### Updating Your Site
-
-After making changes:
-
-```bash
-git add .
-git commit -m "Your update message"
-git push origin main
+```
+content/          Site content (TOML, Markdown, BibTeX)
+public/           Static files: figures, papers, globe textures, redirects for old URLs
+sources/          Originals of figures and logos (PDFs, full-size images). Not published
+src/app/          Routes and global styles
+src/components/   React components
+src/lib/          Content loaders, BibTeX parser, visitor logging
+docs/             Supabase setup notes
 ```
 
-GitHub Pages will automatically redeploy within a few minutes.
+## Credits
 
-## Configuration
-
-### Supabase Setup (Optional - for visitor map)
-
-1. Copy `config.example.js` to `config.js`
-2. Sign up at [Supabase](https://supabase.com/)
-3. Create a new project and table
-4. Update `config.js` with your credentials:
-   ```javascript
-   const SUPABASE_CONFIG = {
-       url: 'https://your-project.supabase.co',
-       anonKey: 'your-anon-key',
-       tableName: 'visitors'
-   };
-   ```
-
-See [SUPABASE_SETUP.md](SUPABASE_SETUP.md) for detailed instructions.
-
-### GitHub Activity Setup
-
-The GitHub contribution graph is already configured with username `IMYXR`. To customize:
-
-1. Edit `github-activity.js`:
-   ```javascript
-   const GITHUB_USERNAME = 'your-username';
-   const USE_REAL_DATA = true;
-   ```
-
-2. (Optional) Add GitHub Personal Access Token for higher API rate limits:
-   ```javascript
-   const GITHUB_TOKEN = 'your-github-token';
-   ```
-
-See [GITHUB_API_SETUP.md](GITHUB_API_SETUP.md) for detailed instructions.
-
-## Important Files
-
-- **`.gitignore`**: Prevents committing sensitive config files
-- **`.nojekyll`**: Tells GitHub Pages not to process site with Jekyll
-- **`config.js`**: Contains Supabase credentials (not committed to git)
-- **`config.example.js`**: Template for configuration
-
-## Customization
-
-### Update Profile Information
-
-Edit `sidebar-template.js`:
-```javascript
-// Update name, title, profile picture
-<h1 class="name">Your Name</h1>
-<img src="figures/your-photo.jpg" alt="Profile Picture">
-```
-
-### Add Publications
-
-1. Add your PDF to `papers/` directory
-2. Create viewer page: `papers/your-paper.html`
-3. Update publication card in `index.html`
-
-### Modify Skills
-
-Edit the Skills section in `about.html` using [skillicons.dev](https://skillicons.dev/):
-```html
-<img src="https://skillicons.dev/icons?i=python" alt="Python">
-```
-
-### Update Social Links
-
-Edit the social media section in `link.html`.
-
-## Browser Compatibility
-
-- Chrome/Edge: ✅ Full support
-- Firefox: ✅ Full support
-- Safari: ✅ Full support
-- Mobile browsers: ✅ Responsive design
-
-## Performance
-
-- Lightweight: ~50KB CSS, minimal JavaScript
-- Fast loading: Optimized assets and code
-- CDN resources: External libraries loaded from CDN
-- No build process: Pure HTML/CSS/JS
-
-## Troubleshooting
-
-### GitHub Activity Not Showing
-
-- Check browser console for errors
-- Verify GitHub username in `github-activity.js`
-- GitHub API has rate limits (60 requests/hour without token)
-- Add a personal access token to increase rate limit
-
-### Visitor Map Not Showing
-
-- Verify Supabase configuration in `config.js`
-- Check browser console for connection errors
-- Ensure `config.js` exists (copy from `config.example.js`)
-
-### PDF Not Loading
-
-- Ensure PDF file exists in `papers/` directory
-- Check filename matches in HTML viewer page
-- Browser must support PDF embedding
-
-### Changes Not Showing on GitHub Pages
-
-- Wait 5-10 minutes for deployment
-- Check GitHub Actions tab for deployment status
-- Clear browser cache (Ctrl+Shift+R)
-- Verify files were committed and pushed
-
-## License
-
-© 2025 Xiaoran Yang - All rights reserved.
-
-## Contact
-
-- Email: xyang49@ncsu.edu
-- GitHub: [@IMYXR](https://github.com/IMYXR)
-- LinkedIn: [Xiaoran Yang](https://www.linkedin.com/in/xiaoran-yang-0a5b58282/en)
-
----
-
-**Note**: This is a personal portfolio website. Feel free to use it as inspiration, but please don't copy it directly.
+Built on [PRISM](https://github.com/xyjoey/PRISM) by Jiale Liu, used under the MIT license (see `LICENSE-PRISM`). Globe rendering by [globe.gl](https://github.com/vasturiano/globe.gl); earth imagery from NASA Blue Marble.

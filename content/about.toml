@@ -1,0 +1,44 @@
+type = "about"
+title = "About"
+
+[profile]
+research_interests = [
+  "LLM Agents in XR",
+  "Human-AI Interaction",
+  "Human Robot Interaction",
+  "Explainable AI"
+]
+
+# Conferences listed in the sidebar card. Delete all entries to hide the card.
+[[profile.attending]]
+title = "ISMAR 2026"
+details = "Bari, Italy · Oct 5-10"   
+
+[[profile.attending]]
+title = "CHI 2026"
+details = "Barcelona, Spain · Apr 13-17"
+
+[[profile.attending]]
+title = "VL/HCC 2025"
+details = "Raleigh, NC · Oct 7-10"
+
+# Home page sections, rendered top to bottom.
+
+[[sections]]
+id = "about"
+type = "markdown"
+source = "bio.md"
+title = "About"
+
+[[sections]]
+id = "news"
+type = "list"
+title = "News"
+source = "news.toml"
+
+[[sections]]
+id = "featured_publications"
+type = "publications"
+title = "Selected Publications"
+filter = "selected"
+limit = 5

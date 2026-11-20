@@ -1,0 +1,467 @@
+@import "tailwindcss";
+
+/* Explicitly set dark mode to use class strategy */
+@variant dark (&:where(.dark, .dark *));
+
+/* Default to light theme colors - no system preference detection */
+:root,
+.light {
+  /* Light theme colors */
+  --background: #fefffe;
+  --foreground: #0f172a;
+  
+  /* Brand colors - Deep Navy & Gold */
+  --primary: #1e293b;
+  --primary-light: #334155;
+  --primary-dark: #0f172a;
+  --accent: #d4a562;
+  --accent-light: #e4b976;
+  --accent-dark: #b8914d;
+  
+  /* Neutral colors */
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+  
+  /* Semantic colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  
+  /* Glass effect */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+
+  /* Institution wordmark: NC State's "Wolfpack Red" */
+  --wordmark: #cc0000;
+
+  /* Navigation tabs: the track they sit in, and the knob / glass lens that marks the
+     selected one. Colourless: greys and white only. */
+  --nav-track: rgba(15, 23, 42, 0.08);
+  --lens-knob: #ffffff;
+  --lens-knob-shadow: 15 23 42;
+  --lens-hairline: rgba(15, 23, 42, 0.2);
+  --lens-inner: rgba(15, 23, 42, 0.13);
+  /* The line of light on the rim: its strength towards the light, opposite it and in
+     between, and how far in from the edge it runs (here, just inside the dark outline). */
+  --lens-rim-near: rgb(255 255 255 / 0.95);
+  --lens-rim-far: rgb(255 255 255 / 0.75);
+  --lens-rim-base: rgb(255 255 255 / 0);
+  --lens-rim-inset: 0.5px;
+  --lens-sheen-near: rgb(255 255 255 / 0.85);
+  --lens-sheen-far: rgb(255 255 255 / 0.6);
+  --lens-shadow-rgb: 15 23 42;
+  --lens-shadow-strength: 1;
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-dark: var(--accent-dark);
+  
+  /* Neutral palette */
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  
+  /* Semantic colors */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  
+  /* Glass effect */
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --color-glass-shadow: var(--glass-shadow);
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  /* Font sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --font-size-8xl: 6rem;
+  --font-size-9xl: 8rem;
+  
+  /* Letter spacing */
+  --letter-spacing-tighter: -0.05em;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+  --letter-spacing-widest: 0.1em;
+  
+  /* Line heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* Use Source Han Serif for Chinese headings/title text via .font-serif */
+html:lang(zh),
+html[data-locale^="zh"] {
+  --font-serif: "Source Han Serif SC", "Source Han Serif CN", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+}
+
+/* Dark mode styles */
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  
+  /* Adjust colors for dark mode */
+  --primary: #f8fafc;
+  --primary-light: #e2e8f0;
+  --primary-dark: #cbd5e1;
+  --accent: #e4b976;
+  --accent-light: #f0c674;
+  --accent-dark: #d4a562;
+  
+  /* Dark mode glass effect */
+  --glass-bg: rgba(15, 23, 42, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+
+  /* Institution wordmark: the same red, lifted so the light-weight letters stay
+     readable on the dark background */
+  --wordmark: #f04444;
+
+  /* Navigation tabs: track, knob and glass lens */
+  --nav-track: rgba(255, 255, 255, 0.08);
+  --lens-knob: #3b4a63;
+  --lens-knob-shadow: 0 0 0;
+  /* On a dark page the line of light is itself the outline of the glass, so it sits right
+     on the edge and never fades out completely; there is no separate outline. */
+  --lens-hairline: rgba(255, 255, 255, 0);
+  --lens-inner: rgba(255, 255, 255, 0.08);
+  --lens-rim-near: rgb(255 255 255 / 0.8);
+  --lens-rim-far: rgb(255 255 255 / 0.48);
+  --lens-rim-base: rgb(255 255 255 / 0.16);
+  --lens-rim-inset: 0px;
+  --lens-sheen-near: rgb(255 255 255 / 0.22);
+  --lens-sheen-far: rgb(255 255 255 / 0.12);
+  --lens-shadow-rgb: 0 0 0;
+  --lens-shadow-strength: 2.2;
+  
+  /* Neutral colors for dark mode - properly inverted */
+  --neutral-50: #0f172a;
+  --neutral-100: #1e293b;
+  --neutral-200: #334155;
+  --neutral-300: #475569;
+  --neutral-400: #64748b;
+  --neutral-500: #94a3b8;
+  --neutral-600: #cbd5e1;
+  --neutral-700: #e2e8f0;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography utilities */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Glass morphism utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-glass);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--neutral-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-400);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: var(--neutral-800);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--neutral-600);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--neutral-500);
+}
+
+/* Site title -----------------------------------------------------------------------
+   "Xiaoran Yang | 杨翛然" in the navigation bar. The Chinese name is set in a Song typeface,
+   the counterpart of the serif used for the Latin title, and the bar between them is
+   lighter than both so that it separates the names without competing with them. */
+.site-title__divider {
+  margin: 0 0.16em;
+  font-weight: 400;
+  color: var(--neutral-400);
+}
+
+.site-title__native {
+  font-family: "Source Han Serif SC", "Source Han Serif CN", "Noto Serif CJK SC", "Noto Serif SC", "Songti SC", STSong, SimSun, serif;
+}
+
+/* Navigation tabs ----------------------------------------------------------------
+   The tabs sit in a track, like a segmented control. The selected one is marked by a
+   knob that turns into a clear glass lens while it is held or moving (LiquidGlassLens.tsx).
+
+   .nav-track            the track
+   .liquid-lens          the knob / lens: clips to a capsule and carries the shadow.
+                         --lens-glass (set from JS) runs from 0, solid knob, to 1, clear glass.
+   .liquid-lens__view    the view through the glass: a re-drawn copy of the page, track and
+                         labels, with the SVG optics filter applied (refraction, shading)
+   .liquid-lens__scene   positions that copy; under the glass it is also magnified
+   .liquid-lens__track   the copy of the track inside the view
+   .liquid-lens__knob    the solid knob, faded out as the lens turns to glass
+   .liquid-lens__edge    the rim of the glass, faded in with it: its outline, and the light
+                         it catches (--lens-rim-* and --lens-sheen-*, set per theme) */
+.nav-track {
+  border-radius: 9999px;
+  background: var(--nav-track);
+}
+
+.liquid-lens {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 9999px;
+  --lens-glass: 0;
+  /* First two: the knob's tight shadow. Rest: the lens floating above the track. */
+  box-shadow:
+    0 1px 2px rgb(var(--lens-knob-shadow) / calc(0.16 * (1 - var(--lens-glass)))),
+    0 1px 1px rgb(var(--lens-knob-shadow) / calc(0.08 * (1 - var(--lens-glass)))),
+    0 0 0 0.5px rgb(var(--lens-shadow-rgb) / calc(0.1 * var(--lens-glass))),
+    0 2px 6px rgb(var(--lens-shadow-rgb) / calc(0.07 * var(--lens-shadow-strength) * var(--lens-glass))),
+    0 12px 26px -6px rgb(var(--lens-shadow-rgb) / calc(0.16 * var(--lens-shadow-strength) * var(--lens-glass)));
+}
+
+.liquid-lens__view {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  /* The page colour behind the track. Opaque on purpose: the real tabs underneath are
+     hidden, and this re-drawn view of them is what appears to show through the glass. */
+  background-color: var(--background);
+}
+
+.liquid-lens__scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.liquid-lens__track {
+  position: absolute;
+  border-radius: 9999px;
+  background: var(--nav-track);
+}
+
+.liquid-lens__knob {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lens-knob);
+}
+
+.liquid-lens__edge {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* In order: the outline of the glass; light caught just inside the rim, on the side
+     facing the light (upper left) and on the side opposite; the slightly denser look of
+     the glass towards its edge. */
+  box-shadow:
+    inset 0 0 0 0.5px var(--lens-hairline),
+    inset 2px 2px 3px -1.5px var(--lens-sheen-near),
+    inset -2px -2px 3px -1.5px var(--lens-sheen-far),
+    inset 0 0 5px 0 var(--lens-inner);
+}
+
+/* The specular rim: a thin line of light running round the edge of the glass, brightest
+   towards the light and where it re-emerges opposite, and faintest in between. It is a
+   gradient with everything but a 1px ring masked away. */
+.liquid-lens__edge::before {
+  content: '';
+  position: absolute;
+  inset: var(--lens-rim-inset);
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--lens-rim-near) 4%, var(--lens-rim-base) 40%, var(--lens-rim-base) 60%, var(--lens-rim-far) 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+/* Institution wordmark -----------------------------------------------------------
+   The institution name set like the NC State wordmark: red capitals in a condensed face
+   (font from src/lib/fonts.ts), heavy for the first part and light for the second.
+   The text itself stays in normal case in the page; capitals are applied here. */
+.institution-wordmark {
+  color: var(--wordmark);
+  font-size: 1.375rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The spacing values below were set by overlaying this text on the official wordmark
+   until the width of each word and the gap between them matched. */
+.institution-wordmark__strong {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.institution-wordmark__light {
+  margin-left: 0.1em;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* Venue logos -----------------------------------------------------------------
+   The logos that stand in for a venue's name on a publication, set straight on the page
+   with no backing. */
+.venue-logos {
+  display: inline-flex;
+  flex-wrap: wrap; /* several logos stack on a screen too narrow for them side by side */
+  align-items: center;
+  gap: 0.375rem 0.625rem;
+  max-width: 100%;
+}
+
+/* Publication preview ---------------------------------------------------------
+   The page behind the "More" panel: dimmed a little and blurred. The dimming is kept
+   light so that the blur is what you notice. */
+.publication-preview__backdrop {
+  background: rgb(15 23 42 / 0.28);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.dark .publication-preview__backdrop {
+  background: rgb(2 6 23 / 0.55);
+}
+
+/* Visitor globe --------------------------------------------------------------- */
+.visitor-globe-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.92);
+  color: #f8fafc;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.visitor-globe-label span {
+  color: #cbd5e1;
+}
+
+/* Card background utility */
+.card-bg {
+  background-color: #ffffff;
+}
+
+.dark .card-bg {
+  background-color: #1e293b;
+  /* Soften card borders in dark mode only */
+  border-color: rgba(148, 163, 184, 0.24);
+}

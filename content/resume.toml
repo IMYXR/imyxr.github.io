@@ -1,0 +1,94 @@
+type = "resume"
+title = "Resume"
+
+# The page is a list of [[sections]], each with a title and [[sections.entries]].
+#
+# An entry can have:
+#   title, subtitle        what it is (a university and the degree; a position)
+#   date, location         shown to the right of the title
+#   details = ["…", "…"]   bullet points; **bold** and [links](https://…) work
+#
+# Two compact forms:
+#   label + text           an entry with a label is a one-line row: "AI Skills   …"
+#   layout = "list"        on a section, sets its entries as one-line rows led by the date:
+#                          "2025   Title, subtitle" (awards, service)
+
+[[sections]]
+title = "Education"
+
+[[sections.entries]]
+title = "NC State University"
+subtitle = "PhD in Computer Science"
+date = "Aug. 2024 – May 2028 (Expected)"
+location = "Raleigh, United States"
+details = [
+  "Spatial Intelligence, Agentic AI, Extended Reality",
+  "Advisor: Dr. Georgie Qiao Jin",
+]
+
+[[sections.entries]]
+title = "Waseda University"
+subtitle = "MS in Modern Mechanical Engineering"
+date = "Sep. 2022 – Aug. 2024"
+location = "Tokyo, Japan"
+details = [
+  "Dissertation Title: Proposal of a Focused Self Attention LLM Allowing to Interpret Fragmentary Requests from Visually Impaired People",
+  "Advisor: Dr. Hiroyasu Iwata & Dr. Jing-chen Hong",
+]
+
+[[sections.entries]]
+title = "Hefei University of Technology"
+subtitle = "BS in Computer Science"
+date = "Aug. 2018 – Jun. 2022"
+location = "Hefei, China"
+details = [
+  "Dissertation Title: Development of bearing fault diagnosis system based on self-supervised learning",
+  "Advisor: Dr. Juan Xu",
+]
+
+[[sections]]
+title = "Experience"
+
+[[sections.entries]]
+title = "Research Assistant, Extended Horizon Lab, North Carolina State University"
+date = "2024 – 2028 (Expected)"
+location = "North Carolina, United States"
+
+[[sections]]
+title = "Skills"
+
+[[sections.entries]]
+label = "HCI Skills"
+text = "Qualitative Research, Quantitative Research"
+
+[[sections.entries]]
+label = "AI Skills"
+text = "Agent, LLM (LlamaIndex, Ollama, RAG, LoRA/PEFT, MCP, GRPO), Transformers, CNNs, RNNs, GNNs"
+
+[[sections.entries]]
+label = "Software Skills"
+text = "Python, C/C++, PyTorch, Hadoop, Spark, MySQL, Git, Numpy, Pandas, Scikit-learn, Matplotlib, Seaborn"
+
+[[sections]]
+title = "Awards & Honors"
+layout = "list"
+
+[[sections.entries]]
+date = "2025"
+title = "Best Short Paper Honorable Mention"
+subtitle = "IEEE VL/HCC"
+
+[[sections.entries]]
+date = "2023"
+title = "Partial Tuition Waiver Scholarship"
+subtitle = "Waseda University"
+
+[[sections.entries]]
+date = "2022"
+title = "Undergraduate School Fellowship"
+subtitle = "Hefei University of Technology"
+
+[[sections.entries]]
+date = "2022"
+title = "Best Undergraduate Graduation Thesis"
+subtitle = "Hefei University of Technology"
